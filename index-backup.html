@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Run Your First 5K</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -31,26 +30,27 @@ body{min-height:100vh;background:var(--bg);font-family:Georgia,serif;color:var(-
 button,input,textarea,select{font-family:inherit;}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
 
-/* AUTH */
+/* AUTH SCREEN */
 #auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px;}
 .auth-card{background:var(--surface2);border:1px solid rgba(249,115,22,0.2);border-radius:20px;padding:36px 28px;max-width:420px;width:100%;text-align:center;}
 .auth-logo{font-size:48px;margin-bottom:16px;}
 .auth-title{font-size:clamp(22px,5vw,32px);font-weight:900;color:var(--white);margin-bottom:8px;}
 .auth-sub{font-size:13px;color:var(--text-secondary);margin-bottom:28px;line-height:1.6;}
-.auth-tabs{display:flex;gap:8px;margin-bottom:20px;}
-.auth-tab{flex:1;padding:10px;border:2px solid var(--border);background:var(--surface);color:var(--text-muted);border-radius:8px;cursor:pointer;font-size:12px;font-family:monospace;font-weight:700;transition:all 0.2s;min-height:44px;}
-.auth-tab.active{border-color:var(--orange);background:rgba(249,115,22,0.15);color:var(--orange);}
+.auth-btn{width:100%;padding:14px;background:linear-gradient(90deg,var(--orange),var(--orange2));border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:900;font-family:monospace;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.auth-btn:hover{opacity:0.9;}
+.auth-switch{font-size:12px;color:var(--text-muted);margin-top:8px;}
+.auth-switch a{color:var(--orange2);cursor:pointer;text-decoration:none;}
+.auth-switch a:hover{color:var(--orange);}
 .auth-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(249,115,22,0.25);border-radius:8px;color:var(--white);font-size:15px;padding:12px 14px;outline:none;margin-bottom:12px;text-align:left;}
 .auth-input:focus{border-color:var(--orange);}
 .auth-input::placeholder{color:var(--text-placeholder);}
-.auth-btn{width:100%;padding:14px;background:linear-gradient(90deg,var(--orange),var(--orange2));border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:900;font-family:monospace;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;transition:opacity 0.2s;}
-.auth-btn:hover{opacity:0.9;}
-.auth-btn:disabled{opacity:0.4;cursor:not-allowed;}
-.auth-error{font-size:12px;color:var(--red);margin-bottom:12px;display:none;text-align:left;background:rgba(252,165,165,0.08);border:1px solid rgba(252,165,165,0.2);border-radius:7px;padding:8px 10px;}
+.auth-error{font-size:12px;color:var(--red);margin-bottom:12px;display:none;}
 .auth-error.show{display:block;}
-.auth-success{font-size:12px;color:var(--green);margin-bottom:12px;display:none;text-align:left;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.2);border-radius:7px;padding:8px 10px;}
-.auth-success.show{display:block;}
-.auth-forgot{background:none;border:none;color:var(--text-muted);font-size:11px;font-family:monospace;cursor:pointer;text-decoration:underline;margin-top:4px;}
+.auth-tabs{display:flex;gap:8px;margin-bottom:24px;}
+.auth-tab{flex:1;padding:10px;border:2px solid var(--border);background:var(--surface);color:var(--text-muted);border-radius:8px;cursor:pointer;font-size:12px;font-family:monospace;font-weight:700;transition:all 0.2s;min-height:44px;}
+.auth-tab.active{border-color:var(--orange);background:rgba(249,115,22,0.15);color:var(--orange);}
+.auth-loading{font-size:12px;color:var(--text-muted);font-family:monospace;margin-top:8px;display:none;}
+.auth-loading.show{display:block;}
 
 /* SETUP */
 #setup-screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:32px 16px;}
@@ -220,7 +220,7 @@ textarea:focus{border-color:var(--orange);}
 .clear-btn{width:100%;background:none;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:var(--text-muted);font-size:11px;font-family:monospace;cursor:pointer;padding:9px;margin-top:12px;min-height:40px;transition:all 0.2s;}
 .clear-btn:hover{border-color:rgba(249,115,22,0.3);color:var(--orange2);}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
-.modal-box{background:#1A1A1A;border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:28px 24px;max-width:420px;width:100%;position:relative;max-height:90vh;overflow-y:auto;}
+.modal-box{background:#1A1A1A;border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:28px 24px;max-width:420px;width:100%;position:relative;}
 .modal-title{font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px;}
 .modal-body{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:20px;}
 .modal-btns{display:flex;gap:10px;flex-wrap:wrap;}
@@ -235,27 +235,11 @@ textarea:focus{border-color:var(--orange);}
 .swap-day-btn:hover{border-color:var(--orange);color:var(--orange);}
 .footer{text-align:center;margin-top:14px;font-size:10px;color:#3A1A05;font-family:monospace;}
 .user-badge{display:inline-block;font-size:10px;font-family:monospace;color:var(--text-muted);margin-top:6px;}
-.checkin-title{font-size:20px;font-weight:700;color:var(--white);margin-bottom:6px;}
-.checkin-sub{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:20px;}
-.checkin-question{font-size:12px;font-weight:700;color:var(--orange2);font-family:monospace;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
-.checkin-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
-.checkin-opt{padding:10px 12px;border:2px solid var(--border);background:var(--surface);color:var(--text-muted);border-radius:8px;cursor:pointer;font-size:12px;font-family:monospace;text-align:center;transition:all 0.2s;min-height:44px;display:flex;align-items:center;justify-content:center;line-height:1.3;}
-.checkin-opt.selected{border-color:var(--orange);background:rgba(249,115,22,0.15);color:var(--orange);}
-.checkin-opt:hover:not(.selected){border-color:rgba(249,115,22,0.3);color:var(--orange2);}
-.checkin-opt.warn-opt.selected{border-color:var(--red);background:rgba(252,165,165,0.1);color:var(--red);}
-.adjustment-card{background:rgba(45,212,191,0.06);border:1px solid rgba(45,212,191,0.2);border-radius:10px;padding:14px;margin-bottom:16px;}
-.adjustment-label{font-size:9px;font-family:monospace;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
-.adjustment-text{font-size:13px;color:var(--teal2);line-height:1.6;}
-.no-change-card{background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:10px;padding:14px;margin-bottom:16px;}
-.no-change-text{font-size:13px;color:var(--green);line-height:1.6;}
-.warn-card{background:rgba(252,165,165,0.06);border:1px solid rgba(252,165,165,0.2);border-radius:10px;padding:14px;margin-bottom:16px;}
-.warn-text{font-size:13px;color:var(--red);line-height:1.6;}
-.skip-link{background:none;border:none;color:var(--text-muted);font-size:11px;font-family:monospace;cursor:pointer;text-decoration:underline;margin-top:8px;display:block;text-align:center;min-height:32px;}
 </style>
 </head>
 <body>
 
-<!-- AUTH -->
+<!-- AUTH SCREEN -->
 <div id="auth-screen">
   <div class="auth-card">
     <div class="auth-logo">🏃</div>
@@ -266,18 +250,17 @@ textarea:focus{border-color:var(--orange);}
       <button class="auth-tab" onclick="setAuthTab('signup')">Create Account</button>
     </div>
     <div id="auth-error" class="auth-error"></div>
-    <div id="auth-success" class="auth-success"></div>
-    <input class="auth-input" type="email" id="auth-email" placeholder="Email address" onkeydown="if(event.key==='Enter')handleAuth()">
-    <input class="auth-input" type="password" id="auth-password" placeholder="Password" onkeydown="if(event.key==='Enter')handleAuth()">
+    <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
+    <input class="auth-input" type="password" id="auth-password" placeholder="Password">
     <div id="auth-confirm-wrap" style="display:none;">
-      <input class="auth-input" type="password" id="auth-confirm" placeholder="Confirm password" onkeydown="if(event.key==='Enter')handleAuth()">
+      <input class="auth-input" type="password" id="auth-confirm" placeholder="Confirm password">
     </div>
     <button class="auth-btn" id="auth-submit-btn" onclick="handleAuth()">Sign In</button>
-    <button class="auth-forgot" id="auth-forgot" onclick="handleForgotPassword()">Forgot password?</button>
+    <div class="auth-loading" id="auth-loading">Please wait...</div>
   </div>
 </div>
 
-<!-- SETUP -->
+<!-- SETUP SCREEN -->
 <div id="setup-screen">
   <div class="setup-card">
     <div class="setup-logo">Personalized Training Program</div>
@@ -322,7 +305,7 @@ textarea:focus{border-color:var(--orange);}
   </div>
 </div>
 
-<!-- APP -->
+<!-- APP SCREEN -->
 <div id="app-screen">
   <header>
     <div class="header-inner">
@@ -349,6 +332,7 @@ textarea:focus{border-color:var(--orange);}
       <button class="gear-item danger" onclick="signOut()">Sign Out</button>
     </div>
   </header>
+
   <div class="container">
     <div class="week-tabs" id="week-tabs"></div>
     <div class="week-card" id="week-card"></div>
@@ -376,7 +360,7 @@ textarea:focus{border-color:var(--orange);}
               <span class="tread-result" id="tread-pace">—</span>
               <span class="tread-unit">min / mile</span>
             </div>
-            <span style="color:var(--text-muted);font-family:monospace;"> </span>
+            <span style="color:var(--text-muted);font-family:monospace;font-size:13px;"> </span>
             <div class="tread-input-wrap">
               <span class="tread-result" id="tread-kph">—</span>
               <span class="tread-unit">km / h</span>
@@ -437,195 +421,169 @@ textarea:focus{border-color:var(--orange);}
     <div id="swap-options" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;"></div>
     <div class="modal-btns"><button class="mbtn-secondary" onclick="closeModal()">Cancel</button></div>
   </div>
-  <div class="modal-box" id="modal-checkin" style="display:none;max-width:480px;">
-    <div id="checkin-content"></div>
-  </div>
-  <div class="modal-box" id="modal-adjustment" style="display:none;max-width:480px;">
-    <div id="adjustment-content"></div>
-  </div>
 </div>
 
 <script>
-// ── SUPABASE ──
-const SUPABASE_URL = "https://nesaaghhkgsvlewgjced.supabase.co";
-const SUPABASE_KEY = "sb_publishable_z6vY_OPL446T2Ujzl5K09w_vCMHoWrF";
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+// ── NETLIFY IDENTITY ──
+let currentUser = null;
 
-const LOCAL_CACHE_KEY = "5k-local-cache-v2";
+window.netlifyIdentity = window.netlifyIdentity || {};
+window.addEventListener("load", () => {
+  // Guard against local file testing where widget won't load
+  if (!window.netlifyIdentity || typeof window.netlifyIdentity.on !== "function") {
+    console.warn("Netlify Identity not available. This app must be tested on the live Netlify site.");
+    document.getElementById("auth-screen").innerHTML = `
+      <div class="auth-card">
+        <div class="auth-logo">🏃</div>
+        <h1 class="auth-title">Run Your First 5K</h1>
+        <p class="auth-sub" style="color:var(--red);">Login requires the live site at msruntrainermarch.netlify.app. Open the app there to sign in.</p>
+      </div>`;
+    showScreen("auth");
+    return;
+  }
+  window.netlifyIdentity.on("init", user => {
+    if (user) {
+      currentUser = user;
+      handleLoggedIn(user);
+    } else {
+      showScreen("auth");
+    }
+  });
+  window.netlifyIdentity.on("login", user => {
+    currentUser = user;
+    window.netlifyIdentity.close();
+    handleLoggedIn(user);
+  });
+  window.netlifyIdentity.on("logout", () => {
+    currentUser = null;
+    plan = null;
+    state = { done:{}, notes:{}, skipped:{}, swaps:{} };
+    showScreen("auth");
+  });
+  window.netlifyIdentity.init();
+});
+
+// Auth UI
+let authTab = "login";
+function setAuthTab(t) {
+  authTab = t;
+  document.querySelectorAll(".auth-tab").forEach((b,i) => b.classList.toggle("active", ["login","signup"][i] === t));
+  document.getElementById("auth-submit-btn").textContent = t === "login" ? "Sign In" : "Create Account";
+  document.getElementById("auth-confirm-wrap").style.display = t === "signup" ? "block" : "none";
+  document.getElementById("auth-error").classList.remove("show");
+}
+
+function handleAuth() {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const confirm = document.getElementById("auth-confirm").value;
+  const errEl = document.getElementById("auth-error");
+  const loadEl = document.getElementById("auth-loading");
+
+  errEl.classList.remove("show");
+
+  if (!email || !password) { errEl.textContent = "Please enter your email and password."; errEl.classList.add("show"); return; }
+  if (authTab === "signup" && password !== confirm) { errEl.textContent = "Passwords do not match."; errEl.classList.add("show"); return; }
+  if (authTab === "signup" && password.length < 8) { errEl.textContent = "Password must be at least 8 characters."; errEl.classList.add("show"); return; }
+
+  loadEl.classList.add("show");
+
+  if (authTab === "login") {
+    window.netlifyIdentity.open("login");
+  } else {
+    window.netlifyIdentity.open("signup");
+  }
+  loadEl.classList.remove("show");
+}
+
+async function handleLoggedIn(user) {
+  document.getElementById("user-badge").textContent = user.email;
+
+  // Check local cache first
+  const cached = getLocalCache();
+  if (cached && cached.userId === user.id) {
+    // Use cache immediately so app loads fast with no function call
+    plan = cached.plan;
+    state = cached.state || { done:{}, notes:{}, skipped:{}, swaps:{} };
+    if (!state.skipped) state.skipped = {};
+    if (!state.swaps) state.swaps = {};
+    shownCelebrations = cached.shownCelebrations || {};
+    if (plan) {
+      showScreen("app");
+      initApp();
+    } else {
+      showScreen("setup");
+    }
+    // Sync from DB in background only if cache is older than 1 hour
+    const cacheAge = Date.now() - (cached.savedAt || 0);
+    if (cacheAge > 60 * 60 * 1000) {
+      syncFromDB(user);
+    }
+    return;
+  }
+
+  // No cache — register user and load from DB
+  await fetch("/.netlify/functions/auth-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: user.id })
+  });
+  await syncFromDB(user);
+}
+
+async function syncFromDB(user) {
+  try {
+    const res = await fetch(`/.netlify/functions/load-progress?user_id=${user.id}`);
+    const json = await res.json();
+    if (json.data && json.data.plan) {
+      plan = json.data.plan;
+      state = json.data.state || { done:{}, notes:{}, skipped:{}, swaps:{} };
+      if (!state.skipped) state.skipped = {};
+      if (!state.swaps) state.swaps = {};
+      shownCelebrations = json.data.shownCelebrations || {};
+      saveLocalCache(user.id);
+      showScreen("app");
+      initApp();
+    } else {
+      showScreen("setup");
+    }
+  } catch(_) {
+    // DB unreachable — if we have a plan already just keep going
+    if (plan) { showScreen("app"); initApp(); }
+    else showScreen("setup");
+  }
+}
+
+function getLocalCache() {
+  try { return JSON.parse(localStorage.getItem(LOCAL_CACHE_KEY)); } catch(_) { return null; }
+}
+
+function saveLocalCache(userId) {
+  try {
+    localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify({
+      userId, plan, state, shownCelebrations, savedAt: Date.now()
+    }));
+  } catch(_) {}
+}
+
+function signOut() {
+  document.getElementById("gear-dropdown").classList.remove("open");
+  window.netlifyIdentity.logout();
+}
+
+function showScreen(name) {
+  document.getElementById("auth-screen").style.display = name === "auth" ? "flex" : "none";
+  document.getElementById("setup-screen").style.display = name === "setup" ? "flex" : "none";
+  document.getElementById("app-screen").style.display = name === "app" ? "block" : "none";
+}
+
+// ── DATA ──
+const STORAGE_KEY = "5k-custom-v3";
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const DAY_NAMES = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const NOTE_PREVIEW = 55;
 
-let plan=null, state={done:{},notes:{},skipped:{},swaps:{}};
-let selWeek=0, toolsOpen=false, noteEditorOpen={}, noteExpanded={}, tipOpen={}, shownCelebrations={};
-let setupDayCount=0, setupSelectedDays=[], isEditMode=false;
-let saveTimeout=null, currentUser=null, checkinAnswers={};
-let authTab="login";
-
-// ── AUTH ──
-function setAuthTab(t){
-  authTab=t;
-  document.querySelectorAll(".auth-tab").forEach((b,i)=>b.classList.toggle("active",["login","signup"][i]===t));
-  document.getElementById("auth-submit-btn").textContent=t==="login"?"Sign In":"Create Account";
-  document.getElementById("auth-confirm-wrap").style.display=t==="signup"?"block":"none";
-  document.getElementById("auth-forgot").style.display=t==="login"?"block":"none";
-  clearAuthMessages();
-}
-
-function clearAuthMessages(){
-  document.getElementById("auth-error").classList.remove("show");
-  document.getElementById("auth-success").classList.remove("show");
-}
-
-function showAuthError(msg){
-  const el=document.getElementById("auth-error");
-  el.textContent=msg;el.classList.add("show");
-  document.getElementById("auth-success").classList.remove("show");
-}
-
-function showAuthSuccess(msg){
-  const el=document.getElementById("auth-success");
-  el.textContent=msg;el.classList.add("show");
-  document.getElementById("auth-error").classList.remove("show");
-}
-
-async function handleAuth(){
-  const email=document.getElementById("auth-email").value.trim();
-  const password=document.getElementById("auth-password").value;
-  const confirm=document.getElementById("auth-confirm").value;
-  const btn=document.getElementById("auth-submit-btn");
-  clearAuthMessages();
-  if(!email||!password){showAuthError("Please enter your email and password.");return;}
-  if(authTab==="signup"&&password!==confirm){showAuthError("Passwords do not match.");return;}
-  if(authTab==="signup"&&password.length<8){showAuthError("Password must be at least 8 characters.");return;}
-  btn.disabled=true;
-  btn.textContent=authTab==="login"?"Signing in...":"Creating account...";
-  if(authTab==="login"){
-    const{data,error}=await sb.auth.signInWithPassword({email,password});
-    if(error){showAuthError(error.message);btn.disabled=false;btn.textContent="Sign In";return;}
-    currentUser=data.user;
-    await handleLoggedIn(data.user);
-  }else{
-    const{data,error}=await sb.auth.signUp({email,password});
-    if(error){showAuthError(error.message);btn.disabled=false;btn.textContent="Create Account";return;}
-    showAuthSuccess("Account created! Check your email to confirm your account, then sign in.");
-    btn.disabled=false;btn.textContent="Create Account";
-    setAuthTab("login");
-  }
-}
-
-async function handleForgotPassword(){
-  const email=document.getElementById("auth-email").value.trim();
-  if(!email){showAuthError("Enter your email address above first.");return;}
-  const{error}=await sb.auth.resetPasswordForEmail(email);
-  if(error){showAuthError(error.message);return;}
-  showAuthSuccess("Password reset email sent. Check your inbox.");
-}
-
-async function handleLoggedIn(user){
-  currentUser=user;
-  document.getElementById("user-badge").textContent=user.email;
-  const cached=getLocalCache();
-  if(cached&&cached.userId===user.id){
-    plan=cached.plan;
-    state=cached.state||{done:{},notes:{},skipped:{},swaps:{}};
-    if(!state.skipped)state.skipped={};
-    if(!state.swaps)state.swaps={};
-    shownCelebrations=cached.shownCelebrations||{};
-    if(plan){showScreen("app");initApp();setTimeout(()=>{if(shouldShowCheckin())openCheckin();},800);}
-    else showScreen("setup");
-    const cacheAge=Date.now()-(cached.savedAt||0);
-    if(cacheAge>60*60*1000)syncFromDB(user);
-    return;
-  }
-  await syncFromDB(user);
-}
-
-async function syncFromDB(user){
-  try{
-    const{data,error}=await sb.from("progress").select("data").eq("user_id",user.id).single();
-    if(data&&data.data){
-      const parsed=JSON.parse(data.data);
-      plan=parsed.plan||null;
-      state=parsed.state||{done:{},notes:{},skipped:{},swaps:{}};
-      if(!state.skipped)state.skipped={};
-      if(!state.swaps)state.swaps={};
-      shownCelebrations=parsed.shownCelebrations||{};
-      saveLocalCache(user.id);
-      if(plan){showScreen("app");initApp();setTimeout(()=>{if(shouldShowCheckin())openCheckin();},800);}
-      else showScreen("setup");
-    }else{
-      showScreen("setup");
-    }
-  }catch(_){
-    if(plan){showScreen("app");initApp();}
-    else showScreen("setup");
-  }
-}
-
-function getLocalCache(){try{return JSON.parse(localStorage.getItem(LOCAL_CACHE_KEY));}catch(_){return null;}}
-function saveLocalCache(userId){
-  try{localStorage.setItem(LOCAL_CACHE_KEY,JSON.stringify({userId,plan,state,shownCelebrations,savedAt:Date.now()}));}catch(_){}
-}
-
-async function save(){
-  if(!currentUser)return;
-  saveLocalCache(currentUser.id);
-  setSaveStatus("saving");
-  if(saveTimeout)clearTimeout(saveTimeout);
-  saveTimeout=setTimeout(async()=>{
-    try{
-      await sb.from("progress").upsert({
-        user_id:currentUser.id,
-        data:JSON.stringify({plan,state,shownCelebrations}),
-        updated_at:new Date().toISOString()
-      },{onConflict:"user_id"});
-      setSaveStatus("saved");
-    }catch(_){setSaveStatus("saved");}
-  },30000);
-  setSaveStatus("saved");
-}
-
-function setSaveStatus(s){
-  const el=document.getElementById("save-status");
-  el.className="save-st st-"+s;
-  el.textContent=s==="saved"?"Saved":s==="saving"?"Saving...":"Save error";
-}
-
-async function signOut(){
-  document.getElementById("gear-dropdown").classList.remove("open");
-  localStorage.removeItem(LOCAL_CACHE_KEY);
-  await sb.auth.signOut();
-  currentUser=null;plan=null;state={done:{},notes:{},skipped:{},swaps:{}};
-  showScreen("auth");
-}
-
-function showScreen(name){
-  document.getElementById("auth-screen").style.display=name==="auth"?"flex":"none";
-  document.getElementById("setup-screen").style.display=name==="setup"?"flex":"none";
-  document.getElementById("app-screen").style.display=name==="app"?"block":"none";
-}
-
-// Check for existing session on load
-window.addEventListener("load",async()=>{
-  const{data:{session}}=await sb.auth.getSession();
-  if(session){
-    await handleLoggedIn(session.user);
-  }else{
-    showScreen("auth");
-  }
-  sb.auth.onAuthStateChange(async(event,session)=>{
-    if(event==="SIGNED_IN"&&session){
-      await handleLoggedIn(session.user);
-    }else if(event==="SIGNED_OUT"){
-      showScreen("auth");
-    }
-  });
-});
-
-// ── PLAN DATA ──
-const WEEK_FOCUS={
+const WEEK_FOCUS = {
   pad:"Base building weeks get your body ready for structured training. Keep every run easy and conversational. There is no such thing as too slow right now.",
   0:"The first week is about habit, not performance. Show up on the days you planned and keep every workout easy. Consistency over the next 8 weeks matters far more than any single run.",
   1:"Distance is the goal this week. Your long run gets a little longer. Resist the urge to go faster just because you feel good. Saving energy now pays off later in the plan.",
@@ -637,7 +595,7 @@ const WEEK_FOCUS={
   7:"Taper week. Less is more. Your body is storing energy for race day and extra runs will only tire you out. Trust your training and focus on sleep, hydration, and staying relaxed."
 };
 
-const DAY_TIPS={
+const DAY_TIPS = {
   "run-easy":"Easy runs should feel fully conversational. If you cannot speak in full sentences, slow down. This pace builds your aerobic engine without wearing you out.",
   "run-interval":"During fast segments focus on quick light steps rather than long strides. Keep your arms at 90 degrees and pump them to drive your pace. The recovery segments are recovery, not rest.",
   "run-pace":"Pace runs train your body to hold a specific effort level. Settle in during the first half and focus on holding form in the second half when it starts to feel harder.",
@@ -647,7 +605,7 @@ const DAY_TIPS={
   "rest":"Rest days are where your fitness actually improves. Your muscles repair and grow stronger during recovery. Light stretching or a short walk is fine but skip anything strenuous."
 };
 
-const WEEK_TEMPLATES=[
+const WEEK_TEMPLATES = [
   {theme:"Build the Habit",goal:"Get comfortable with your training days",miles:{3:"4 mi",4:"5 mi",5:"6 mi"},slots:{3:["run-easy","cross","run-long"],4:["run-easy","cross","run-easy","run-long"],5:["run-easy","cross","run-easy","cross","run-long"]}},
   {theme:"Add Distance",goal:"Reach 2 miles comfortably",miles:{3:"5 mi",4:"6.5 mi",5:"7.5 mi"},slots:{3:["run-easy","cross","run-long"],4:["run-easy","cross","run-easy","run-long"],5:["run-easy","cross","run-easy","cross","run-long"]}},
   {theme:"Introduce Pace Work",goal:"Start building speed awareness",miles:{3:"5.5 mi",4:"7 mi",5:"8 mi"},slots:{3:["run-easy","run-interval","run-long"],4:["run-easy","run-interval","run-easy","run-long"],5:["run-easy","run-interval","run-easy","cross","run-long"]}},
@@ -657,10 +615,10 @@ const WEEK_TEMPLATES=[
   {theme:"Race Simulation",goal:"Run a full 5K near goal pace",miles:{3:"7 mi",4:"9.1 mi",5:"10.5 mi"},slots:{3:["run-easy","run-pace","run-long"],4:["run-easy","cross","run-pace","run-long"],5:["run-easy","cross","run-easy","run-pace","run-long"]}},
   {theme:"Taper and Race Week",goal:"Rest up and run your 5K!",miles:{3:"5 mi",4:"6.7 mi",5:"7.5 mi"},slots:{3:["run-easy","cross","run-race"],4:["run-easy","cross","run-easy","run-race"],5:["run-easy","cross","run-easy","cross","run-race"]}},
 ];
-const PAD_TEMPLATE={theme:"Base Building",goal:"Easy miles to prepare your body",miles:{3:"3 mi",4:"4 mi",5:"5 mi"},slots:{3:["run-easy","cross","run-easy"],4:["run-easy","cross","run-easy","run-easy"],5:["run-easy","cross","run-easy","cross","run-easy"]}};
-const PACES=["12:00","12:00","11:30","12:00","11:00","10:30","10:00","9:39"];
+const PAD_TEMPLATE = {theme:"Base Building",goal:"Easy miles to prepare your body",miles:{3:"3 mi",4:"4 mi",5:"5 mi"},slots:{3:["run-easy","cross","run-easy"],4:["run-easy","cross","run-easy","run-easy"],5:["run-easy","cross","run-easy","cross","run-easy"]}};
+const PACES = ["12:00","12:00","11:30","12:00","11:00","10:30","10:00","9:39"];
 
-const SLOT_DATA={
+const SLOT_DATA = {
   "run-easy":[
     {label:"1.5 mi easy",detail:"Treadmill at about 12:00/mi. Relaxed effort, build the habit.",treadmill:true},
     {label:"2 mi easy",detail:"Treadmill at about 12:00/mi. Settle into a steady rhythm.",treadmill:true},
@@ -723,7 +681,52 @@ const SLOT_DATA={
   ],
 };
 
-// ── SETUP ──
+let plan=null, state={done:{},notes:{},skipped:{},swaps:{}};
+let selWeek=0, toolsOpen=false, noteEditorOpen={}, noteExpanded={}, tipOpen={}, shownCelebrations={};
+let setupDayCount=0, setupSelectedDays=[], isEditMode=false;
+let saveTimeout=null;
+const LOCAL_CACHE_KEY="5k-local-cache";
+
+function fmt(dateStr){const d=new Date(dateStr);return MONTHS[d.getMonth()]+" "+d.getDate();}
+function todayKey(){
+  const now=new Date();now.setHours(0,0,0,0);
+  if(!plan)return null;
+  const start=new Date(plan.startDate);start.setHours(0,0,0,0);
+  const diff=Math.round((now-start)/86400000);
+  if(diff<0||diff>=plan.weeks.length*7)return null;
+  return`${Math.floor(diff/7)}-${diff%7}`;
+}
+
+async function save(){
+  if(!currentUser)return;
+  // Always save to local cache immediately — fast and free
+  saveLocalCache(currentUser.id);
+  setSaveStatus("saving");
+  // Debounce DB writes to max once per 30 seconds of activity
+  if(saveTimeout)clearTimeout(saveTimeout);
+  saveTimeout=setTimeout(async()=>{
+    try{
+      await fetch("/.netlify/functions/save-progress",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({user_id:currentUser.id,data:{plan,state,shownCelebrations}})
+      });
+      setSaveStatus("saved");
+    }catch(_){
+      // DB write failed but local cache is safe
+      setSaveStatus("saved");
+    }
+  },30000); // 30 second debounce — max ~2 DB writes per minute
+  setSaveStatus("saved");
+}
+
+function setSaveStatus(s){
+  const el=document.getElementById("save-status");
+  el.className="save-st st-"+s;
+  el.textContent=s==="saved"?"Saved":s==="saving"?"Saving...":"Save error";
+}
+
+// Setup
 function setDayCount(n){
   setupDayCount=n;setupSelectedDays=[];
   document.querySelectorAll(".day-count-btn").forEach(b=>b.classList.remove("active"));
@@ -769,12 +772,24 @@ function checkDayWarnings(){
     }
     if(run.length>=thresh)run.forEach(d=>warnSet.add(d));
   }
-  document.querySelectorAll(".day-check-btn.selected").forEach(b=>{b.classList.toggle("warn-day",warnSet.has(parseInt(b.dataset.day)));});
+  document.querySelectorAll(".day-check-btn.selected").forEach(b=>{
+    b.classList.toggle("warn-day",warnSet.has(parseInt(b.dataset.day)));
+  });
   const hint=document.getElementById("days-hint");
   if(s.length===setupDayCount){
-    if(warnSet.size>0){hint.className="setup-hint warn";hint.textContent=setupDayCount===5?"Those days include 4 or more in a row. Try to break it up for better recovery.":"Those days include 3 or more in a row including week wrap-around. Consider spacing out for better recovery.";}
-    else{hint.className="setup-hint ok";hint.textContent=setupDayCount===5?"Good spread. Some back-to-back days are normal at 5 days per week.":"Great schedule. Good recovery built in.";}
-  }else{hint.className="setup-hint";hint.textContent=`Select ${setupDayCount-s.length} more day${setupDayCount-s.length!==1?"s":""}.`;}
+    if(warnSet.size>0){
+      hint.className="setup-hint warn";
+      hint.textContent=setupDayCount===5
+        ?"Those days include 4 or more in a row. Try to break it up for better recovery."
+        :"Those days include 3 or more in a row including week wrap-around. Consider spacing out for better recovery.";
+    }else{
+      hint.className="setup-hint ok";
+      hint.textContent=setupDayCount===5?"Good spread. Some back-to-back days are normal at 5 days per week.":"Great schedule. Good recovery built in.";
+    }
+  }else{
+    hint.className="setup-hint";
+    hint.textContent=`Select ${setupDayCount-s.length} more day${setupDayCount-s.length!==1?"s":""}.`;
+  }
 }
 
 function validateSetup(){
@@ -787,7 +802,12 @@ function validateSetup(){
     const weeks=Math.round((race-start)/86400000/7);
     if(weeks<6){hint.className="setup-hint warn";hint.textContent="Race date is less than 6 weeks away. We recommend at least 6 weeks.";}
     else if(weeks>12){hint.className="setup-hint warn";hint.textContent="Race date is more than 12 weeks away. Max supported is 12 weeks.";}
-    else{const pad=weeks-8;hint.className="setup-hint ok";hint.textContent=pad>0?`${weeks}-week plan: ${pad} base-building week${pad>1?"s":""} plus 8-week core program.`:`${weeks}-week plan. Perfect!`;dateOk=true;}
+    else{
+      const pad=weeks-8;
+      hint.className="setup-hint ok";
+      hint.textContent=pad>0?`${weeks}-week plan: ${pad} base-building week${pad>1?"s":""} plus 8-week core program.`:`${weeks}-week plan. Perfect!`;
+      dateOk=true;
+    }
   }else{hint.className="setup-hint";hint.textContent="Your plan length will adjust to fit your race date (6 to 12 weeks).";}
   document.getElementById("start-btn").disabled=!(setupSelectedDays.length===setupDayCount&&sv&&rv&&dateOk);
 }
@@ -801,7 +821,9 @@ function startPlan(){
   const newPlan=buildPlan(setupDayCount,setupSelectedDays,start,race,padWeeks);
   if(isEditMode&&plan){plan=newPlan;isEditMode=false;}
   else{plan=newPlan;state={done:{},notes:{},skipped:{},swaps:{}};}
-  save();showScreen("app");initApp();
+  save();
+  showScreen("app");
+  initApp();
 }
 
 function getMondayOf(date){
@@ -836,24 +858,38 @@ function buildWeek(tmpl,dayCount,trainDays,monday,weekOffset,coreIdx,isPad){
   return{theme:tmpl.theme,goal:tmpl.goal,miles:tmpl.miles[dayCount],isPad,pace:coreIdx>=0?PACES[coreIdx]:"12:00",coreIdx,days};
 }
 
-// ── GEAR ──
+// Gear
 function toggleGear(){document.getElementById("gear-dropdown").classList.toggle("open");}
-document.addEventListener("click",e=>{const dd=document.getElementById("gear-dropdown");if(dd&&!dd.contains(e.target)&&!e.target.closest(".gear-btn"))dd.classList.remove("open");});
+document.addEventListener("click",e=>{
+  const dd=document.getElementById("gear-dropdown");
+  if(dd&&!dd.contains(e.target)&&!e.target.closest(".gear-btn"))dd.classList.remove("open");
+});
 function openEditModal(){document.getElementById("gear-dropdown").classList.remove("open");showModal("modal-edit");}
 function openRestartModal(){document.getElementById("gear-dropdown").classList.remove("open");showModal("modal-restart");}
 function goToEditSetup(){
   closeModal();isEditMode=true;
   setDayCount(plan.dayCount);
-  plan.trainDays.forEach(d=>{const btn=document.querySelector(`.day-check-btn[data-day="${d}"]`);if(btn){btn.classList.add("selected");btn.classList.remove("disabled");}});
+  plan.trainDays.forEach(d=>{
+    const btn=document.querySelector(`.day-check-btn[data-day="${d}"]`);
+    if(btn){btn.classList.add("selected");btn.classList.remove("disabled");}
+  });
   setupSelectedDays=plan.trainDays.slice();
-  document.querySelectorAll(".day-check-btn").forEach(b=>{const d=parseInt(b.dataset.day);if(!setupSelectedDays.includes(d)){if(setupSelectedDays.length<setupDayCount)b.classList.remove("disabled");else b.classList.add("disabled");}});
+  document.querySelectorAll(".day-check-btn").forEach(b=>{
+    const d=parseInt(b.dataset.day);
+    if(!setupSelectedDays.includes(d)){
+      if(setupSelectedDays.length<setupDayCount)b.classList.remove("disabled");
+      else b.classList.add("disabled");
+    }
+  });
   document.getElementById("start-date-input").value=toInputDate(new Date(plan.startDate));
   document.getElementById("race-date-input").value=toInputDate(new Date(plan.raceDate));
-  checkDayWarnings();validateSetup();showScreen("setup");
+  checkDayWarnings();validateSetup();
+  showScreen("setup");
 }
 function toInputDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function confirmRestart(){
-  closeModal();plan=null;state={done:{},notes:{},skipped:{},swaps:{}};shownCelebrations={};
+  closeModal();
+  plan=null;state={done:{},notes:{},skipped:{},swaps:{}};shownCelebrations={};
   setupDayCount=0;setupSelectedDays=[];isEditMode=false;
   document.querySelectorAll(".day-count-btn").forEach(b=>b.classList.remove("active"));
   document.querySelectorAll(".day-check-btn").forEach(b=>{b.classList.remove("selected","warn-day");b.classList.add("disabled");});
@@ -865,16 +901,16 @@ function confirmRestart(){
   document.getElementById("date-hint").textContent="Your plan length will adjust to fit your race date (6 to 12 weeks).";
   document.getElementById("date-hint").className="setup-hint";
   document.getElementById("start-btn").disabled=true;
-  localStorage.removeItem(LOCAL_CACHE_KEY);
-  save();showScreen("setup");
+  save();
+  showScreen("setup");
 }
 
-// ── MODALS ──
+// Modals
 function showModal(id){document.getElementById("modal-overlay").style.display="flex";document.querySelectorAll(".modal-box").forEach(b=>b.style.display="none");document.getElementById(id).style.display="block";}
 function closeModal(){document.getElementById("modal-overlay").style.display="none";document.querySelectorAll(".modal-box").forEach(b=>b.style.display="none");}
 function closeModalOverlay(e){if(e.target===document.getElementById("modal-overlay"))closeModal();}
 
-// ── DAY ACTIONS ──
+// Day actions
 function toggleDay(wi,di){const key=wi+"-"+di;if(state.skipped[key])return;state.done[key]=!state.done[key];save();checkWeekCompletion(wi);render();}
 function skipDay(wi,di){const key=wi+"-"+di;state.skipped[key]=true;state.done[key]=false;save();render();}
 function unskipDay(wi,di){const key=wi+"-"+di;delete state.skipped[key];save();render();}
@@ -883,7 +919,10 @@ function openSwap(wi,di){
   const opts=wk.days.filter((d,idx)=>d.isRest&&!state.swaps[wi+"-"+idx]);
   if(!opts.length){alert("No available rest days this week to swap to.");return;}
   document.getElementById("swap-modal-body").textContent=`Moving: ${wk.days[di].label}. Choose a rest day to train on instead.`;
-  document.getElementById("swap-options").innerHTML=opts.map(d=>{const idx=wk.days.indexOf(d);return`<button class="swap-day-btn" onclick="confirmSwap(${wi},${di},${idx})">${d.dayName}<br><small style="font-size:9px;color:var(--text-muted);">${fmt(d.date)}</small></button>`;}).join("");
+  document.getElementById("swap-options").innerHTML=opts.map(d=>{
+    const idx=wk.days.indexOf(d);
+    return`<button class="swap-day-btn" onclick="confirmSwap(${wi},${di},${idx})">${d.dayName}<br><small style="font-size:9px;color:var(--text-muted);">${fmt(d.date)}</small></button>`;
+  }).join("");
   showModal("modal-swap");
 }
 function confirmSwap(wi,fromDi,toDi){state.swaps[wi+"-"+toDi]=wi+"-"+fromDi;state.swaps[wi+"-"+fromDi]="rest";save();closeModal();render();}
@@ -909,177 +948,16 @@ function checkWeekCompletion(wi){
     if(!hasSkipped){
       document.getElementById("cel-icon").textContent=wi===plan.weeks.length-1?"🏆":"🎉";
       document.getElementById("cel-title").textContent=wi===plan.weeks.length-1?"You Did It! Race Week Done!":"Perfect Week!";
-      document.getElementById("cel-body").textContent=wi===plan.weeks.length-1?"You completed every workout in race week. Go get that 5K. You are ready!":"Every workout done. Week "+(wi+1)+" is in the books. That kind of consistency builds a runner. Keep it up!";
+      document.getElementById("cel-body").textContent=wi===plan.weeks.length-1?"You completed every workout in race week. Go get that 5K. You are ready!":` Every workout done. Week ${wi+1} is in the books. That kind of consistency builds a runner. Keep it up!`;
     }else{
       document.getElementById("cel-icon").textContent="💪";
       document.getElementById("cel-title").textContent="Week Wrapped Up";
-      document.getElementById("cel-body").textContent="You finished week "+(wi+1)+" and that counts. Life gets in the way for every runner. What matters is you showed up more days than not. Reset and go after next week.";
+      document.getElementById("cel-body").textContent=`You finished week ${wi+1} and that counts. Life gets in the way for every runner. What matters is you showed up more days than not. Reset and go after next week.`;
     }
     showModal("modal-week-complete");
   },400);
 }
 
-// ── CHECK-IN ──
-function shouldShowCheckin(){
-  if(!plan)return false;
-  const tk=todayKey();if(!tk)return false;
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  if(currentWeekIdx<1)return false;
-  if(shownCelebrations["checkin-week-"+(currentWeekIdx-1)])return false;
-  return true;
-}
-function getCheckinType(prevWeekIdx){
-  const wk=plan.weeks[prevWeekIdx];
-  const activeDays=wk.days.filter((d,di)=>!d.isRest&&state.swaps[prevWeekIdx+"-"+di]!=="rest");
-  const doneDays=activeDays.filter(d=>{const realDi=wk.days.indexOf(d);return state.done[prevWeekIdx+"-"+realDi];});
-  const skippedDays=activeDays.filter(d=>{const realDi=wk.days.indexOf(d);return state.skipped[prevWeekIdx+"-"+realDi];});
-  const missedDays=activeDays.length-doneDays.length-skippedDays.length;
-  if((missedDays+skippedDays.length)>=Math.ceil(activeDays.length/2))return"returning";
-  return"normal";
-}
-function openCheckin(){
-  if(!shouldShowCheckin())return;
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  const prevWeekIdx=currentWeekIdx-1;
-  const type=getCheckinType(prevWeekIdx);
-  checkinAnswers={type,prevWeekIdx,currentWeekIdx};
-  const wk=plan.weeks[prevWeekIdx];
-  const activeDays=wk.days.filter(d=>!d.isRest);
-  const skippedCount=activeDays.filter(d=>{const realDi=wk.days.indexOf(d);return state.skipped[prevWeekIdx+"-"+realDi];}).length;
-  checkinAnswers.skippedCount=skippedCount;
-  if(type==="returning")showReturningCheckin(prevWeekIdx);
-  else showNormalCheckin(prevWeekIdx);
-  showModal("modal-checkin");
-}
-function showNormalCheckin(prevWeekIdx){
-  document.getElementById("checkin-content").innerHTML=`
-    <div style="font-size:24px;text-align:center;margin-bottom:12px;">💬</div>
-    <div class="checkin-title">Quick Check-in</div>
-    <div class="checkin-sub">Before we show you this week, tell us how week ${prevWeekIdx+1} felt. This helps us adjust your plan if needed.</div>
-    <div class="checkin-question">How did your legs feel?</div>
-    <div class="checkin-options">
-      <button class="checkin-opt" onclick="selectCheckin('legs','fresh',this)">Fresh</button>
-      <button class="checkin-opt" onclick="selectCheckin('legs','normal',this)">Normal</button>
-      <button class="checkin-opt" onclick="selectCheckin('legs','tired',this)">Tired</button>
-      <button class="checkin-opt" onclick="selectCheckin('legs','dead',this)">Dead</button>
-    </div>
-    <div class="checkin-question">How did the effort feel overall?</div>
-    <div class="checkin-options">
-      <button class="checkin-opt" onclick="selectCheckin('effort','easy',this)">Too easy</button>
-      <button class="checkin-opt" onclick="selectCheckin('effort','right',this)">Just right</button>
-      <button class="checkin-opt" onclick="selectCheckin('effort','hard',this)">Too hard</button>
-    </div>
-    <div class="checkin-question">Any issues?</div>
-    <div class="checkin-options">
-      <button class="checkin-opt" onclick="selectCheckin('issues','none',this)">Nothing</button>
-      <button class="checkin-opt" onclick="selectCheckin('issues','soreness',this)">Some soreness</button>
-      <button class="checkin-opt warn-opt" onclick="selectCheckin('issues','joint',this)">Joint or knee pain</button>
-      <button class="checkin-opt warn-opt" onclick="selectCheckin('issues','breathing',this)">Breathing was tough</button>
-    </div>
-    <div class="modal-btns" style="margin-top:4px;">
-      <button class="mbtn-primary" id="checkin-submit" onclick="submitCheckin()" disabled>See My Adjustments</button>
-    </div>
-    <button class="skip-link" onclick="skipCheckin()">Skip for now and keep original plan</button>`;
-}
-function showReturningCheckin(prevWeekIdx){
-  document.getElementById("checkin-content").innerHTML=`
-    <div style="font-size:24px;text-align:center;margin-bottom:12px;">👋</div>
-    <div class="checkin-title">Welcome Back</div>
-    <div class="checkin-sub">Life happens to every runner. No judgment here. How are you feeling coming back this week?</div>
-    <div class="checkin-question">How are you feeling?</div>
-    <div class="checkin-options" style="grid-template-columns:1fr;">
-      <button class="checkin-opt" onclick="selectCheckin('returning','ready',this)">Ready to go, let's get back at it</button>
-      <button class="checkin-opt" onclick="selectCheckin('returning','rusty',this)">A little rusty, ease me back in</button>
-      <button class="checkin-opt" onclick="selectCheckin('returning','more',this)">Still need more time, lighter week please</button>
-    </div>
-    <div class="modal-btns" style="margin-top:4px;">
-      <button class="mbtn-primary" id="checkin-submit" onclick="submitCheckin()" disabled>See My Plan</button>
-    </div>
-    <button class="skip-link" onclick="skipCheckin()">Skip for now and keep original plan</button>`;
-}
-function selectCheckin(key,val,btn){
-  checkinAnswers[key]=val;
-  btn.closest(".checkin-options").querySelectorAll(".checkin-opt").forEach(b=>b.classList.remove("selected"));
-  btn.classList.add("selected");
-  const submitBtn=document.getElementById("checkin-submit");
-  if(!submitBtn)return;
-  if(checkinAnswers.type==="returning")submitBtn.disabled=!checkinAnswers.returning;
-  else submitBtn.disabled=!(checkinAnswers.legs&&checkinAnswers.effort&&checkinAnswers.issues);
-}
-function skipCheckin(){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  shownCelebrations["checkin-week-"+(currentWeekIdx-1)]="skipped";
-  save();closeModal();
-}
-function submitCheckin(){const adjustment=calculateAdjustment();applyAdjustment(adjustment);showAdjustmentSummary(adjustment);}
-
-function calculateAdjustment(){
-  const a=checkinAnswers;
-  const adj={type:"none",changes:[],paceAdjust:0,mileageAdjust:0,swapRunForCross:false,warn:false,warnText:""};
-  if(a.type==="returning"){
-    if(a.returning==="ready"){adj.type="none";}
-    else if(a.returning==="rusty"){adj.type="ease-back";adj.paceAdjust=30;adj.changes.push("Pulled target pace back by 30 seconds per mile to ease you back in.");}
-    else if(a.returning==="more"){adj.type="recovery";adj.paceAdjust=60;adj.mileageAdjust=-0.15;adj.swapRunForCross=true;adj.changes.push("Reduced mileage by 15% this week.");adj.changes.push("Swapped one run for cross training to give your legs more recovery time.");adj.changes.push("Pulled target pace back by 60 seconds per mile.");}
-    return adj;
-  }
-  if(a.skippedCount>=2){adj.paceAdjust+=15;adj.changes.push(`You skipped ${a.skippedCount} workouts last week so we have softened this week slightly.`);}
-  else if(a.skippedCount===1){adj.paceAdjust+=10;}
-  if(a.issues==="joint"){adj.warn=true;adj.warnText="You mentioned joint or knee pain. We have lightened this week but please consider seeing a doctor or physio before continuing. Pain that persists is worth taking seriously.";adj.paceAdjust+=30;adj.mileageAdjust=-0.1;adj.swapRunForCross=true;adj.changes.push("Lightened this week due to reported joint or knee pain.");adj.type="warn";return adj;}
-  if(a.issues==="breathing"){adj.paceAdjust+=20;adj.changes.push("Pulled pace back slightly to help with breathing. Slow down and the breathing will follow.");}
-  if(a.legs==="fresh"&&a.effort==="easy"){adj.type="increase";adj.mileageAdjust=0.1;adj.paceAdjust=-15;adj.changes.push("You felt strong so we bumped mileage up by 10% and nudged your target pace slightly faster.");}
-  else if((a.legs==="fresh"||a.legs==="normal")&&a.effort==="right"){adj.type="none";}
-  else if(a.legs==="tired"&&a.effort==="right"){adj.type="soften";adj.paceAdjust+=30;adj.changes.push("Your legs were tired so we pulled target pace back by 30 seconds per mile. The effort should feel the same.");}
-  else if(a.legs==="tired"&&a.effort==="hard"){adj.type="soften";adj.paceAdjust+=30;adj.mileageAdjust=-0.1;adj.swapRunForCross=true;adj.changes.push("Your legs were tired and the effort felt hard so we dropped mileage by 10% and swapped one run for cross training.");adj.changes.push("Pulled target pace back by 30 seconds per mile.");}
-  else if(a.legs==="dead"){adj.type="recovery";adj.paceAdjust+=45;adj.mileageAdjust=-0.15;adj.swapRunForCross=true;adj.changes.push("Your legs were really struggling so this week is a recovery week. Mileage is down 15%.");adj.changes.push("One run swapped for cross training and pace pulled back significantly.");adj.changes.push("Trust the process. A lighter week now means stronger running later.");}
-  else if(a.legs==="fresh"&&a.effort==="hard"){adj.type="soften";adj.paceAdjust+=15;adj.changes.push("Even though your legs felt OK the effort was hard, so we pulled pace back slightly to keep things sustainable.");}
-  return adj;
-}
-function parsePaceToSecs(pace){const parts=pace.split(":").map(Number);return parts[0]*60+(parts[1]||0);}
-function secsToMinMile(secs){const m=Math.floor(secs/60),s=Math.round(secs%60);return`${m}:${String(s).padStart(2,"0")}`;}
-function applyAdjustment(adj){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  const wk=plan.weeks[currentWeekIdx];
-  if(!wk)return;
-  if(!wk.originalDays)wk.originalDays=JSON.parse(JSON.stringify(wk.days));
-  if(!wk.originalMiles)wk.originalMiles=wk.miles;
-  if(!wk.originalPace)wk.originalPace=wk.pace;
-  wk.adjustmentApplied=adj;
-  if(adj.type==="none")return;
-  if(adj.paceAdjust!==0){const cur=parsePaceToSecs(wk.pace||"12:00");wk.pace=secsToMinMile(Math.max(480,cur+adj.paceAdjust));}
-  if(adj.mileageAdjust!==0){const mi=parseFloat(wk.miles);if(!isNaN(mi))wk.miles=(mi*(1+adj.mileageAdjust)).toFixed(1)+" mi";}
-  if(adj.swapRunForCross){for(let di=0;di<wk.days.length;di++){const d=wk.days[di];if(d.slot==="run-easy"&&!state.done[currentWeekIdx+"-"+di]){wk.days[di]={...d,type:"cross",slot:"cross",label:"Cross-train (easy)",detail:"Swapped from a run this week to give your legs more recovery time.",treadmill:false};break;}}}
-}
-function showAdjustmentSummary(adj){
-  closeModal();
-  let html="";
-  if(adj.type==="none"&&adj.changes.length===0){html=`<div style="font-size:24px;text-align:center;margin-bottom:12px;">✅</div><div class="modal-title">Plan Unchanged</div><div class="no-change-card"><div class="no-change-text">Your training is going well. No adjustments needed. Stick with the original plan this week and keep it up!</div></div><div class="modal-btns"><button class="mbtn-primary" onclick="confirmAdjustment()">Let's Go</button></div>`;}
-  else if(adj.warn){html=`<div style="font-size:24px;text-align:center;margin-bottom:12px;">⚠️</div><div class="modal-title">Heads Up</div><div class="warn-card"><div class="warn-text">${adj.warnText}</div></div>${adj.changes.length?`<div class="adjustment-card"><div class="adjustment-label">What We Changed</div><div class="adjustment-text">${adj.changes.map(c=>"- "+c).join("<br>")}</div></div>`:""}<div class="modal-btns"><button class="mbtn-primary" onclick="confirmAdjustment()">Got It, Show My Plan</button><button class="mbtn-secondary" onclick="overrideAdjustment()">Keep Original Plan</button></div>`;}
-  else{html=`<div style="font-size:24px;text-align:center;margin-bottom:12px;">📋</div><div class="modal-title">Here Is What We Adjusted</div><div class="adjustment-card"><div class="adjustment-label">Changes for This Week</div><div class="adjustment-text">${adj.changes.map(c=>"- "+c).join("<br>")}</div></div><div class="modal-body" style="margin-bottom:16px;">These are small tweaks to keep your training sustainable. You can always override if you feel differently.</div><div class="modal-btns"><button class="mbtn-primary" onclick="confirmAdjustment()">Looks Good</button><button class="mbtn-secondary" onclick="overrideAdjustment()">Keep Original Plan</button></div>`;}
-  document.getElementById("adjustment-content").innerHTML=html;
-  showModal("modal-adjustment");
-}
-function confirmAdjustment(){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  shownCelebrations["checkin-week-"+(currentWeekIdx-1)]="done";
-  save();closeModal();render();
-}
-function overrideAdjustment(){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  const wk=plan.weeks[currentWeekIdx];
-  if(wk.originalDays)wk.days=JSON.parse(JSON.stringify(wk.originalDays));
-  if(wk.originalMiles)wk.miles=wk.originalMiles;
-  if(wk.originalPace)wk.pace=wk.originalPace;
-  delete wk.adjustmentApplied;
-  shownCelebrations["checkin-week-"+(currentWeekIdx-1)]="overridden";
-  save();closeModal();render();
-}
-
-// ── NOTES AND TIPS ──
 function toggleTip(key){tipOpen[key]=!tipOpen[key];render();}
 function openNoteEditor(wi,di){noteEditorOpen[wi+"-"+di]=true;render();setTimeout(()=>{const t=document.getElementById("ta-"+wi+"-"+di);if(t)t.focus();},50);}
 function closeNoteEditor(wi,di){noteEditorOpen[wi+"-"+di]=false;render();}
@@ -1088,16 +966,6 @@ function deleteNote(wi,di){state.notes[wi+"-"+di]="";noteEditorOpen[wi+"-"+di]=f
 function toggleNoteExp(wi,di){const k=wi+"-"+di;noteExpanded[k]=!noteExpanded[k];render();}
 function selectWeek(wi){selWeek=wi;render();}
 function toggleTools(){toolsOpen=!toolsOpen;document.getElementById("tools-body").classList.toggle("open",toolsOpen);document.getElementById("tools-arrow").style.transform=toolsOpen?"rotate(180deg)":"rotate(0deg)";}
-
-function fmt(dateStr){const d=new Date(dateStr);return MONTHS[d.getMonth()]+" "+d.getDate();}
-function todayKey(){
-  const now=new Date();now.setHours(0,0,0,0);
-  if(!plan)return null;
-  const start=new Date(plan.startDate);start.setHours(0,0,0,0);
-  const diff=Math.round((now-start)/86400000);
-  if(diff<0||diff>=plan.weeks.length*7)return null;
-  return`${Math.floor(diff/7)}-${diff%7}`;
-}
 
 function updateCountdown(){
   if(!plan)return;
@@ -1129,18 +997,25 @@ function render(){
   const allKeys=plan.weeks.flatMap((w,wi)=>w.days.map((d,di)=>wi+"-"+di).filter((_,di)=>!plan.weeks[wi].days[di].isRest));
   const totalDone=allKeys.filter(k=>state.done[k]&&!state.skipped[k]).length;
   document.getElementById("total-bar").style.width=allKeys.length?(totalDone/allKeys.length*100).toFixed(1)+"%":"0%";
+
   document.getElementById("week-tabs").innerHTML=plan.weeks.map((w,wi)=>{
     const isSel=selWeek===wi,isCur=tk&&parseInt(tk.split("-")[0])===wi;
     let cls="week-btn"+(isSel?" active":isCur?" current":"")+(w.isPad?" pad":"");
     return`<button class="${cls}" onclick="selectWeek(${wi})">W${wi+1}${w.isPad?'<span style="font-size:8px;display:block;color:#555;">base</span>':""}</button>`;
   }).join("");
+
   const wk=plan.weeks[selWeek];
   const effectiveDays=wk.days.map((d,di)=>{
     const key=selWeek+"-"+di;
     if(state.swaps[key]==="rest")return{...d,type:"rest",label:"Rest",detail:"Workout moved to another day.",isRest:true,isSwappedOut:true};
-    if(state.swaps[key]){const[swi,sdi]=state.swaps[key].split("-").map(Number);const src=plan.weeks[swi].days[sdi];return{...src,dayIdx:d.dayIdx,dayName:d.dayName,date:d.date,isRest:false,isSwappedIn:true};}
+    if(state.swaps[key]){
+      const[swi,sdi]=state.swaps[key].split("-").map(Number);
+      const src=plan.weeks[swi].days[sdi];
+      return{...src,dayIdx:d.dayIdx,dayName:d.dayName,date:d.date,isRest:false,isSwappedIn:true};
+    }
     return d;
   });
+
   const wkActive=effectiveDays.filter(d=>!d.isRest).length;
   const wkDone=effectiveDays.filter((d,i)=>!d.isRest&&state.done[selWeek+"-"+i]&&!state.skipped[selWeek+"-"+i]).length;
   const b2bSet=new Set();
@@ -1148,6 +1023,7 @@ function render(){
   const paceLabel=wk.isPad?"12:00":(wk.pace||PACES[Math.min(selWeek,7)]);
   const focusKey=wk.isPad?"pad":wk.coreIdx;
   const focusText=WEEK_FOCUS[focusKey]||"";
+
   const daysHtml=effectiveDays.map((d,di)=>{
     const key=selWeek+"-"+di;
     const isDone=!!state.done[key]&&!state.skipped[key];
@@ -1175,19 +1051,30 @@ function render(){
     if(!d.isRest&&!isSwappedOut){
       let btns="";
       if(isSkipped){btns+=`<button class="day-act-btn unskip-btn" onclick="unskipDay(${selWeek},${di});event.stopPropagation()">Unskip</button>`;}
-      else if(!isDone){btns+=`<button class="day-act-btn skip-btn" onclick="skipDay(${selWeek},${di});event.stopPropagation()">Skip Day</button>`;btns+=`<button class="day-act-btn" onclick="openSwap(${selWeek},${di});event.stopPropagation()">Move</button>`;}
+      else if(!isDone){
+        btns+=`<button class="day-act-btn skip-btn" onclick="skipDay(${selWeek},${di});event.stopPropagation()">Skip Day</button>`;
+        btns+=`<button class="day-act-btn" onclick="openSwap(${selWeek},${di});event.stopPropagation()">Move</button>`;
+      }
       if(isSwappedIn){btns+=`<button class="day-act-btn" onclick="cancelSwap(${selWeek},${di});event.stopPropagation()" style="color:#fbbf24;border-color:rgba(251,191,36,0.3);">Cancel Move</button>`;}
       if(btns)actionsHtml=`<div class="day-actions" onclick="event.stopPropagation()">${btns}</div>`;
     }
     const inlineTipHtml=tipText?`<div class="inline-tip${tipIsOpen?" open":""}" id="tip-${key}"><div class="inline-tip-label">Training Tip</div><div class="inline-tip-text">${tipText}</div></div>`:"";
     let noteHtml="";
     if(!isSkipped){
-      if(editorOpen){const ph=d.type==="run"?"How did it go? Pace, effort, how you felt...":d.type==="cross"?"What did you do? Duration, effort...":"Did you stretch, walk, foam roll?";noteHtml=`<div class="note-editor" onclick="event.stopPropagation()"><textarea id="ta-${key}" placeholder="${ph}">${note}</textarea><div class="edit-btns"><button class="btn-save" onclick="saveNote(${selWeek},${di})">Save</button><button class="btn-cancel" onclick="closeNoteEditor(${selWeek},${di})">Cancel</button>${hasNote?`<button class="btn-del" onclick="deleteNote(${selWeek},${di})">Delete</button>`:""}</div></div>`;}
-      else if(hasNote){const preview=expanded||!isLong?note:note.slice(0,NOTE_PREVIEW)+"...";noteHtml=`<div class="note-area" onclick="event.stopPropagation()"><div class="note-preview">${preview}<span class="note-acts">${isLong?`<button class="note-btn" onclick="toggleNoteExp(${selWeek},${di})">${expanded?"less":"more"}</button>`:""}<button class="note-btn" onclick="openNoteEditor(${selWeek},${di})">edit</button></span></div></div>`;}
-      else{noteHtml=`<div class="note-area" onclick="event.stopPropagation()"><button class="add-note-btn" onclick="openNoteEditor(${selWeek},${di})">+ add note</button></div>`;}
+      if(editorOpen){
+        const ph=d.type==="run"?"How did it go? Pace, effort, how you felt...":d.type==="cross"?"What did you do? Duration, effort...":"Did you stretch, walk, foam roll?";
+        noteHtml=`<div class="note-editor" onclick="event.stopPropagation()"><textarea id="ta-${key}" placeholder="${ph}">${note}</textarea><div class="edit-btns"><button class="btn-save" onclick="saveNote(${selWeek},${di})">Save</button><button class="btn-cancel" onclick="closeNoteEditor(${selWeek},${di})">Cancel</button>${hasNote?`<button class="btn-del" onclick="deleteNote(${selWeek},${di})">Delete</button>`:""}</div></div>`;
+      }else if(hasNote){
+        const preview=expanded||!isLong?note:note.slice(0,NOTE_PREVIEW)+"...";
+        noteHtml=`<div class="note-area" onclick="event.stopPropagation()"><div class="note-preview">${preview}<span class="note-acts">${isLong?`<button class="note-btn" onclick="toggleNoteExp(${selWeek},${di})">${expanded?"less":"more"}</button>`:""}<button class="note-btn" onclick="openNoteEditor(${selWeek},${di})">edit</button></span></div></div>`;
+      }else{
+        noteHtml=`<div class="note-area" onclick="event.stopPropagation()"><button class="add-note-btn" onclick="openNoteEditor(${selWeek},${di})">+ add note</button></div>`;
+      }
     }
-    return`<div class="${rowCls}"><div class="${mainCls}" ${clickAttr}><div class="day-col"><div class="dn${isToday?" today":""}">${d.dayName.toUpperCase()}</div><div class="dd">${fmt(d.date)}</div><div class="dbadge dbadge-${d.type}">${d.type.toUpperCase()}</div>${isB2B&&!isSwappedOut?'<div class="b2b-b">B2B</div>':""}${isToday?'<div class="today-b">TODAY</div>':""}${isSkipped?'<div class="skip-b">SKIPPED</div>':""}${isSwappedIn?'<div class="swap-b">MOVED</div>':""}${isSwappedOut?'<div class="swap-b">MOVED</div>':""}</div><div><div class="${labelCls}">${isDone?"✓ ":""}${d.label}${treadmill}${noteIcon}</div><div class="ddetail">${d.detail}</div></div><div style="display:flex;align-items:center;gap:4px;">${infoBtn}${checkEl}</div></div>${inlineTipHtml}${actionsHtml}${noteHtml}</div>`;
+    return`<div class="${rowCls}"><div class="${mainCls}" ${clickAttr}><div class="day-col"><div class="dn${isToday?" today":""}">${d.dayName.toUpperCase()}</div><div class="dd">${fmt(d.date)}</div><div class="dbadge dbadge-${d.type}">${d.type.toUpperCase()}</div>${isB2B&&!isSwappedOut?'<div class="b2b-b">B2B</div>':""}${isToday?'<div class="today-b">TODAY</div>':""}${isSkipped?'<div class="skip-b">SKIPPED</div>':""}${isSwappedIn?'<div class="swap-b">MOVED</div>':""}${isSwappedOut?'<div class="swap-b">MOVED</div>':""}
+    </div><div><div class="${labelCls}">${isDone?"✓ ":""}${d.label}${treadmill}${noteIcon}</div><div class="ddetail">${d.detail}</div></div><div style="display:flex;align-items:center;gap:4px;">${infoBtn}${checkEl}</div></div>${inlineTipHtml}${actionsHtml}${noteHtml}</div>`;
   }).join("");
+
   document.getElementById("week-card").innerHTML=`
     <div class="wk-header"><div><div class="wk-label">Week ${selWeek+1}${wk.isPad?'<span class="pad-badge">base</span>':""} - ${fmt(wk.days[0].date)} to ${fmt(wk.days[6].date)}</div><h2 class="wk-title">${wk.theme}</h2><p class="wk-goal">${wk.goal}</p></div>
     <div class="wk-stats"><div class="wk-stats-lbl">Weekly Total</div><div class="wk-miles">${wk.miles}</div><div class="wk-pace">Target: ${paceLabel}/mi</div></div></div>
@@ -1198,7 +1085,7 @@ function render(){
     <div class="days-grid">${daysHtml}</div>`;
 }
 
-// ── CALC TOOLS ──
+// Calc tools
 function setCalcTab(t,btn){["pace","time","dist"].forEach(id=>{document.getElementById("ctab-"+id).style.display=id===t?"block":"none";});document.querySelectorAll(".calc-tab").forEach(b=>b.classList.remove("active"));btn.classList.add("active");}
 function parseTime(str){if(!str||!str.trim())return null;const parts=str.trim().split(":").map(Number);if(parts.some(isNaN)||parts.some(p=>p<0))return null;if(parts.length===2){const[m,s]=parts;if(s>=60)return null;return m*60+s;}if(parts.length===3){const[h,m,s]=parts;if(m>=60||s>=60)return null;return h*3600+m*60+s;}return null;}
 function fmtTime(secs){secs=Math.round(secs);const h=Math.floor(secs/3600),m=Math.floor((secs%3600)/60),s=secs%60;if(h>0)return`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;return`${m}:${String(s).padStart(2,"0")}`;}
