@@ -9,29 +9,15 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#0D0D0D;
-  --surface:rgba(255,255,255,0.03);
-  --surface2:rgba(255,255,255,0.06);
-  --border:rgba(255,255,255,0.09);
-  --orange:#F97316;
-  --orange2:#FB923C;
-  --orange3:#FDBA74;
-  --teal:#2DD4BF;
-  --teal2:#5EEAD4;
-  --white:#FFFFFF;
-  --text-primary:#FFFFFF;
-  --text-secondary:#FDBA74;
-  --text-detail:#FB923C;
-  --text-muted:#A0A0A0;
-  --text-placeholder:#7A7A7A;
-  --green:#4ADE80;
-  --red:#FCA5A5;
+  --bg:#0D0D0D;--surface:rgba(255,255,255,0.03);--surface2:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.09);--orange:#F97316;--orange2:#FB923C;--orange3:#FDBA74;
+  --teal:#2DD4BF;--teal2:#5EEAD4;--white:#FFFFFF;--text-primary:#FFFFFF;
+  --text-secondary:#FDBA74;--text-detail:#FB923C;--text-muted:#A0A0A0;
+  --text-placeholder:#7A7A7A;--green:#4ADE80;--red:#FCA5A5;
 }
 body{min-height:100vh;background:var(--bg);font-family:Georgia,serif;color:var(--text-primary);padding-bottom:60px;}
 button,input,textarea,select{font-family:inherit;}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
-
-/* AUTH */
 #auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px;}
 .auth-card{background:var(--surface2);border:1px solid rgba(249,115,22,0.2);border-radius:20px;padding:36px 28px;max-width:420px;width:100%;text-align:center;}
 .auth-logo{font-size:48px;margin-bottom:16px;}
@@ -51,8 +37,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 .auth-success{font-size:12px;color:var(--green);margin-bottom:12px;display:none;text-align:left;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.2);border-radius:7px;padding:8px 10px;}
 .auth-success.show{display:block;}
 .auth-forgot{background:none;border:none;color:var(--text-muted);font-size:11px;font-family:monospace;cursor:pointer;text-decoration:underline;margin-top:4px;}
-
-/* SETUP */
 #setup-screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:32px 16px;}
 .setup-card{background:var(--surface2);border:1px solid rgba(249,115,22,0.2);border-radius:20px;padding:36px 28px;max-width:520px;width:100%;}
 .setup-logo{font-size:11px;letter-spacing:6px;color:var(--orange2);text-transform:uppercase;font-family:monospace;margin-bottom:8px;}
@@ -80,8 +64,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 @media(max-width:400px){.date-row{grid-template-columns:1fr;}}
 .start-btn{width:100%;padding:16px;background:linear-gradient(90deg,var(--orange),var(--orange2));border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:900;font-family:monospace;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:opacity 0.2s;margin-top:8px;}
 .start-btn:disabled{opacity:0.3;cursor:not-allowed;}
-
-/* APP */
 #app-screen{display:none;}
 header{background:rgba(0,0,0,0.5);border-bottom:1px solid var(--border);padding:24px 20px 18px;position:relative;}
 .header-inner{text-align:center;padding-right:52px;padding-left:52px;}
@@ -142,16 +124,13 @@ header{background:rgba(0,0,0,0.5);border-bottom:1px solid var(--border);padding:
 .dn.today{color:var(--teal);font-weight:700;}
 .dd{font-size:10px;color:var(--text-detail);font-family:monospace;}
 .dbadge{margin-top:3px;font-size:8px;font-weight:700;font-family:monospace;letter-spacing:1px;background:rgba(255,255,255,0.05);border-radius:3px;padding:2px 4px;display:inline-block;}
-.dbadge-run{color:var(--orange2);}
-.dbadge-rest{color:var(--text-muted);}
-.dbadge-cross{color:var(--teal2);}
+.dbadge-run{color:var(--orange2);}.dbadge-rest{color:var(--text-muted);}.dbadge-cross{color:var(--teal2);}
 .b2b-b{font-size:7px;color:#fbbf24;font-family:monospace;margin-top:2px;}
 .today-b{font-size:7px;color:var(--teal);font-family:monospace;font-weight:700;margin-top:2px;}
 .skip-b{font-size:7px;color:var(--red);font-family:monospace;margin-top:2px;}
 .swap-b{font-size:7px;color:#fbbf24;font-family:monospace;margin-top:2px;}
 .dlabel{font-size:13px;font-weight:600;color:var(--white);display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
-.dlabel.done{color:var(--orange3);}
-.dlabel.skipped{color:#888;text-decoration:line-through;}
+.dlabel.done{color:var(--orange3);}.dlabel.skipped{color:#888;text-decoration:line-through;}
 .ttag{font-size:9px;color:var(--orange2);font-family:monospace;background:rgba(249,115,22,0.1);border-radius:3px;padding:1px 4px;}
 .ddetail{font-size:11px;color:var(--text-detail);margin-top:2px;line-height:1.4;}
 .check-c{width:22px;height:22px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,0.25);background:transparent;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:11px;color:#fff;}
@@ -255,7 +234,6 @@ textarea:focus{border-color:var(--orange);}
 </head>
 <body>
 
-<!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-card">
     <div class="auth-logo">🏃</div>
@@ -277,7 +255,6 @@ textarea:focus{border-color:var(--orange);}
   </div>
 </div>
 
-<!-- SETUP -->
 <div id="setup-screen">
   <div class="setup-card">
     <div class="setup-logo">Personalized Training Program</div>
@@ -322,7 +299,6 @@ textarea:focus{border-color:var(--orange);}
   </div>
 </div>
 
-<!-- APP -->
 <div id="app-screen">
   <header>
     <div class="header-inner">
@@ -413,7 +389,6 @@ textarea:focus{border-color:var(--orange);}
   </div>
 </div>
 
-<!-- MODALS -->
 <div class="modal-overlay" id="modal-overlay" style="display:none" onclick="closeModalOverlay(event)">
   <div class="modal-box" id="modal-restart" style="display:none">
     <div class="modal-title">Restart Program?</div>
@@ -446,21 +421,20 @@ textarea:focus{border-color:var(--orange);}
 </div>
 
 <script>
-// ── SUPABASE ──
-const SUPABASE_URL = "https://nesaaghhkgsvlewgjced.supabase.co";
-const SUPABASE_KEY = "sb_publishable_z6vY_OPL446T2Ujzl5K09w_vCMHoWrF";
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL="https://nesaaghhkgsvlewgjced.supabase.co";
+const SUPABASE_KEY="sb_publishable_z6vY_OPL446T2Ujzl5K09w_vCMHoWrF";
+const{createClient}=supabase;
+const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const LOCAL_CACHE_KEY = "5k-local-cache-v2";
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const DAY_NAMES = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-const NOTE_PREVIEW = 55;
+const LOCAL_CACHE_KEY="5k-local-cache-v2";
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const DAY_NAMES=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const NOTE_PREVIEW=55;
 
-let plan=null, state={done:{},notes:{},skipped:{},swaps:{}};
-let selWeek=0, toolsOpen=false, noteEditorOpen={}, noteExpanded={}, tipOpen={}, shownCelebrations={};
-let setupDayCount=0, setupSelectedDays=[], isEditMode=false;
-let saveTimeout=null, currentUser=null, checkinAnswers={};
+let plan=null,state={done:{},notes:{},skipped:{},swaps:{}};
+let selWeek=0,toolsOpen=false,noteEditorOpen={},noteExpanded={},tipOpen={},shownCelebrations={};
+let setupDayCount=0,setupSelectedDays=[],isEditMode=false;
+let saveTimeout=null,currentUser=null,checkinAnswers={};
 let authTab="login";
 
 // ── AUTH ──
@@ -472,23 +446,12 @@ function setAuthTab(t){
   document.getElementById("auth-forgot").style.display=t==="login"?"block":"none";
   clearAuthMessages();
 }
-
 function clearAuthMessages(){
   document.getElementById("auth-error").classList.remove("show");
   document.getElementById("auth-success").classList.remove("show");
 }
-
-function showAuthError(msg){
-  const el=document.getElementById("auth-error");
-  el.textContent=msg;el.classList.add("show");
-  document.getElementById("auth-success").classList.remove("show");
-}
-
-function showAuthSuccess(msg){
-  const el=document.getElementById("auth-success");
-  el.textContent=msg;el.classList.add("show");
-  document.getElementById("auth-error").classList.remove("show");
-}
+function showAuthError(msg){const el=document.getElementById("auth-error");el.textContent=msg;el.classList.add("show");document.getElementById("auth-success").classList.remove("show");}
+function showAuthSuccess(msg){const el=document.getElementById("auth-success");el.textContent=msg;el.classList.add("show");document.getElementById("auth-error").classList.remove("show");}
 
 async function handleAuth(){
   const email=document.getElementById("auth-email").value.trim();
@@ -523,22 +486,67 @@ async function handleForgotPassword(){
   showAuthSuccess("Password reset email sent. Check your inbox.");
 }
 
+// ── SAVE (fixed) ──
+// Always write localStorage immediately.
+// Debounce the Supabase write to 500ms (was 30s) to batch rapid taps.
+// Flush immediately on visibilitychange so tab-close / phone-sleep don't lose data.
+
+function onVisibilityChange(){
+  if(document.visibilityState==="hidden"&&currentUser){
+    if(saveTimeout){clearTimeout(saveTimeout);saveTimeout=null;}
+    doSupabaseSave();
+  }
+}
+
+async function doSupabaseSave(){
+  try{
+    const{error}=await sb.from("progress").upsert({
+      user_id:currentUser.id,
+      data:JSON.stringify({plan,state,shownCelebrations}),
+      updated_at:new Date().toISOString()
+    },{onConflict:"user_id"});
+    setSaveStatus(error?"error":"saved");
+    if(!error)saveLocalCache(currentUser.id);
+  }catch(_){setSaveStatus("error");}
+}
+
+async function save(){
+  if(!currentUser)return;
+  saveLocalCache(currentUser.id);
+  setSaveStatus("saving");
+  if(saveTimeout)clearTimeout(saveTimeout);
+  saveTimeout=setTimeout(()=>doSupabaseSave(),500);
+  document.removeEventListener("visibilitychange",onVisibilityChange);
+  document.addEventListener("visibilitychange",onVisibilityChange);
+}
+
+function setSaveStatus(s){
+  const el=document.getElementById("save-status");
+  el.className="save-st st-"+s;
+  el.textContent=s==="saved"?"Saved":s==="saving"?"Saving...":"Save error";
+}
+
+// ── SESSION / LOGIN ──
 async function handleLoggedIn(user){
   currentUser=user;
   document.getElementById("user-badge").textContent=user.email;
+
+  // Show cached state immediately for fast perceived load
   const cached=getLocalCache();
-  if(cached&&cached.userId===user.id){
+  if(cached&&cached.userId===user.id&&cached.plan){
     plan=cached.plan;
     state=cached.state||{done:{},notes:{},skipped:{},swaps:{}};
     if(!state.skipped)state.skipped={};
     if(!state.swaps)state.swaps={};
     shownCelebrations=cached.shownCelebrations||{};
-    if(plan){showScreen("app");initApp();setTimeout(()=>{if(shouldShowCheckin())openCheckin();},800);}
-    else showScreen("setup");
-    const cacheAge=Date.now()-(cached.savedAt||0);
-    if(cacheAge>60*60*1000)syncFromDB(user);
-    return;
+    showScreen("app");
+    initApp();
+  }else{
+    showScreen("setup");
   }
+
+  // Always sync from DB — this is the source of truth.
+  // If DB has newer data it will overwrite the optimistic render.
   await syncFromDB(user);
 }
 
@@ -556,11 +564,10 @@ async function syncFromDB(user){
       if(plan){showScreen("app");initApp();setTimeout(()=>{if(shouldShowCheckin())openCheckin();},800);}
       else showScreen("setup");
     }else{
-      showScreen("setup");
+      if(!plan)showScreen("setup");
     }
   }catch(_){
-    if(plan){showScreen("app");initApp();}
-    else showScreen("setup");
+    if(!plan)showScreen("setup");
   }
 }
 
@@ -569,32 +576,9 @@ function saveLocalCache(userId){
   try{localStorage.setItem(LOCAL_CACHE_KEY,JSON.stringify({userId,plan,state,shownCelebrations,savedAt:Date.now()}));}catch(_){}
 }
 
-async function save(){
-  if(!currentUser)return;
-  saveLocalCache(currentUser.id);
-  setSaveStatus("saving");
-  if(saveTimeout)clearTimeout(saveTimeout);
-  saveTimeout=setTimeout(async()=>{
-    try{
-      await sb.from("progress").upsert({
-        user_id:currentUser.id,
-        data:JSON.stringify({plan,state,shownCelebrations}),
-        updated_at:new Date().toISOString()
-      },{onConflict:"user_id"});
-      setSaveStatus("saved");
-    }catch(_){setSaveStatus("saved");}
-  },30000);
-  setSaveStatus("saved");
-}
-
-function setSaveStatus(s){
-  const el=document.getElementById("save-status");
-  el.className="save-st st-"+s;
-  el.textContent=s==="saved"?"Saved":s==="saving"?"Saving...":"Save error";
-}
-
 async function signOut(){
   document.getElementById("gear-dropdown").classList.remove("open");
+  document.removeEventListener("visibilitychange",onVisibilityChange);
   localStorage.removeItem(LOCAL_CACHE_KEY);
   await sb.auth.signOut();
   currentUser=null;plan=null;state={done:{},notes:{},skipped:{},swaps:{}};
@@ -607,20 +591,13 @@ function showScreen(name){
   document.getElementById("app-screen").style.display=name==="app"?"block":"none";
 }
 
-// Check for existing session on load
 window.addEventListener("load",async()=>{
   const{data:{session}}=await sb.auth.getSession();
-  if(session){
-    await handleLoggedIn(session.user);
-  }else{
-    showScreen("auth");
-  }
+  if(session){await handleLoggedIn(session.user);}
+  else{showScreen("auth");}
   sb.auth.onAuthStateChange(async(event,session)=>{
-    if(event==="SIGNED_IN"&&session){
-      await handleLoggedIn(session.user);
-    }else if(event==="SIGNED_OUT"){
-      showScreen("auth");
-    }
+    if(event==="SIGNED_IN"&&session){await handleLoggedIn(session.user);}
+    else if(event==="SIGNED_OUT"){showScreen("auth");}
   });
 });
 
@@ -772,7 +749,7 @@ function checkDayWarnings(){
   document.querySelectorAll(".day-check-btn.selected").forEach(b=>{b.classList.toggle("warn-day",warnSet.has(parseInt(b.dataset.day)));});
   const hint=document.getElementById("days-hint");
   if(s.length===setupDayCount){
-    if(warnSet.size>0){hint.className="setup-hint warn";hint.textContent=setupDayCount===5?"Those days include 4 or more in a row. Try to break it up for better recovery.":"Those days include 3 or more in a row including week wrap-around. Consider spacing out for better recovery.";}
+    if(warnSet.size>0){hint.className="setup-hint warn";hint.textContent=setupDayCount===5?"Those days include 4 or more in a row. Try to break it up for better recovery.":"Those days include 3 or more in a row. Consider spacing out for better recovery.";}
     else{hint.className="setup-hint ok";hint.textContent=setupDayCount===5?"Good spread. Some back-to-back days are normal at 5 days per week.":"Great schedule. Good recovery built in.";}
   }else{hint.className="setup-hint";hint.textContent=`Select ${setupDayCount-s.length} more day${setupDayCount-s.length!==1?"s":""}.`;}
 }
@@ -805,15 +782,13 @@ function startPlan(){
 }
 
 function getMondayOf(date){
-  const d=new Date(date);
-  const jsDay=d.getDay();
+  const d=new Date(date);const jsDay=d.getDay();
   const diffToMon=jsDay===0?-6:1-jsDay;
   d.setDate(d.getDate()+diffToMon);d.setHours(0,0,0,0);return d;
 }
 
 function buildPlan(dayCount,trainDays,startDate,raceDate,padWeeks){
-  const weeks=[];
-  const monday=getMondayOf(startDate);
+  const weeks=[];const monday=getMondayOf(startDate);
   for(let p=0;p<padWeeks;p++)weeks.push(buildWeek(PAD_TEMPLATE,dayCount,trainDays,monday,p,-1,true));
   for(let wi=0;wi<8;wi++)weeks.push(buildWeek(WEEK_TEMPLATES[wi],dayCount,trainDays,monday,padWeeks+wi,wi,false));
   return{startDate:startDate.toISOString(),raceDate:raceDate.toISOString(),trainDays,dayCount,padWeeks,weeks};
@@ -824,10 +799,8 @@ function buildWeek(tmpl,dayCount,trainDays,monday,weekOffset,coreIdx,isPad){
   for(let di=0;di<7;di++){
     const d=new Date(monday);d.setDate(d.getDate()+weekOffset*7+di);
     if(trainDays.includes(di)&&slotIdx<slots.length){
-      const slot=slots[slotIdx++];
-      const sd=SLOT_DATA[slot];
-      const idx=coreIdx>=0?coreIdx:0;
-      const entry=sd[Math.min(idx,sd.length-1)];
+      const slot=slots[slotIdx++];const sd=SLOT_DATA[slot];
+      const idx=coreIdx>=0?coreIdx:0;const entry=sd[Math.min(idx,sd.length-1)];
       days.push({dayIdx:di,dayName:DAY_NAMES[di],date:d.toISOString(),type:slot.startsWith("run")?"run":"cross",slot,label:entry.label,detail:entry.detail,treadmill:entry.treadmill,isRest:false});
     }else{
       days.push({dayIdx:di,dayName:DAY_NAMES[di],date:d.toISOString(),type:"rest",slot:"rest",label:"Rest",detail:"Full rest day.",treadmill:false,isRest:true});
@@ -888,16 +861,14 @@ function openSwap(wi,di){
 }
 function confirmSwap(wi,fromDi,toDi){state.swaps[wi+"-"+toDi]=wi+"-"+fromDi;state.swaps[wi+"-"+fromDi]="rest";save();closeModal();render();}
 function cancelSwap(wi,di){
-  const key=wi+"-"+di;
-  const fromKey=state.swaps[key];
+  const key=wi+"-"+di;const fromKey=state.swaps[key];
   if(fromKey&&fromKey!=="rest")delete state.swaps[fromKey];
   delete state.swaps[key];delete state.done[key];delete state.skipped[key];
   save();render();
 }
 
 function checkWeekCompletion(wi){
-  const wk=plan.weeks[wi];
-  const celebKey="week-"+wi;
+  const wk=plan.weeks[wi];const celebKey="week-"+wi;
   if(shownCelebrations[celebKey])return;
   const activeDays=wk.days.filter((d,di)=>!d.isRest&&state.swaps[wi+"-"+di]!=="rest");
   if(!activeDays.length)return;
@@ -939,13 +910,10 @@ function getCheckinType(prevWeekIdx){
 }
 function openCheckin(){
   if(!shouldShowCheckin())return;
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  const prevWeekIdx=currentWeekIdx-1;
-  const type=getCheckinType(prevWeekIdx);
+  const tk=todayKey();const currentWeekIdx=parseInt(tk.split("-")[0]);
+  const prevWeekIdx=currentWeekIdx-1;const type=getCheckinType(prevWeekIdx);
   checkinAnswers={type,prevWeekIdx,currentWeekIdx};
-  const wk=plan.weeks[prevWeekIdx];
-  const activeDays=wk.days.filter(d=>!d.isRest);
+  const wk=plan.weeks[prevWeekIdx];const activeDays=wk.days.filter(d=>!d.isRest);
   const skippedCount=activeDays.filter(d=>{const realDi=wk.days.indexOf(d);return state.skipped[prevWeekIdx+"-"+realDi];}).length;
   checkinAnswers.skippedCount=skippedCount;
   if(type==="returning")showReturningCheckin(prevWeekIdx);
@@ -956,7 +924,7 @@ function showNormalCheckin(prevWeekIdx){
   document.getElementById("checkin-content").innerHTML=`
     <div style="font-size:24px;text-align:center;margin-bottom:12px;">💬</div>
     <div class="checkin-title">Quick Check-in</div>
-    <div class="checkin-sub">Before we show you this week, tell us how week ${prevWeekIdx+1} felt. This helps us adjust your plan if needed.</div>
+    <div class="checkin-sub">Before we show you this week, tell us how week ${prevWeekIdx+1} felt.</div>
     <div class="checkin-question">How did your legs feel?</div>
     <div class="checkin-options">
       <button class="checkin-opt" onclick="selectCheckin('legs','fresh',this)">Fresh</button>
@@ -1008,8 +976,7 @@ function selectCheckin(key,val,btn){
   else submitBtn.disabled=!(checkinAnswers.legs&&checkinAnswers.effort&&checkinAnswers.issues);
 }
 function skipCheckin(){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
+  const tk=todayKey();const currentWeekIdx=parseInt(tk.split("-")[0]);
   shownCelebrations["checkin-week-"+(currentWeekIdx-1)]="skipped";
   save();closeModal();
 }
@@ -1021,40 +988,36 @@ function calculateAdjustment(){
   if(a.type==="returning"){
     if(a.returning==="ready"){adj.type="none";}
     else if(a.returning==="rusty"){adj.type="ease-back";adj.paceAdjust=30;adj.changes.push("Pulled target pace back by 30 seconds per mile to ease you back in.");}
-    else if(a.returning==="more"){adj.type="recovery";adj.paceAdjust=60;adj.mileageAdjust=-0.15;adj.swapRunForCross=true;adj.changes.push("Reduced mileage by 15% this week.");adj.changes.push("Swapped one run for cross training to give your legs more recovery time.");adj.changes.push("Pulled target pace back by 60 seconds per mile.");}
+    else if(a.returning==="more"){adj.type="recovery";adj.paceAdjust=60;adj.mileageAdjust=-0.15;adj.swapRunForCross=true;adj.changes.push("Reduced mileage by 15% this week.");adj.changes.push("Swapped one run for cross training.");adj.changes.push("Pulled target pace back by 60 seconds per mile.");}
     return adj;
   }
   if(a.skippedCount>=2){adj.paceAdjust+=15;adj.changes.push(`You skipped ${a.skippedCount} workouts last week so we have softened this week slightly.`);}
   else if(a.skippedCount===1){adj.paceAdjust+=10;}
-  if(a.issues==="joint"){adj.warn=true;adj.warnText="You mentioned joint or knee pain. We have lightened this week but please consider seeing a doctor or physio before continuing. Pain that persists is worth taking seriously.";adj.paceAdjust+=30;adj.mileageAdjust=-0.1;adj.swapRunForCross=true;adj.changes.push("Lightened this week due to reported joint or knee pain.");adj.type="warn";return adj;}
-  if(a.issues==="breathing"){adj.paceAdjust+=20;adj.changes.push("Pulled pace back slightly to help with breathing. Slow down and the breathing will follow.");}
-  if(a.legs==="fresh"&&a.effort==="easy"){adj.type="increase";adj.mileageAdjust=0.1;adj.paceAdjust=-15;adj.changes.push("You felt strong so we bumped mileage up by 10% and nudged your target pace slightly faster.");}
+  if(a.issues==="joint"){adj.warn=true;adj.warnText="You mentioned joint or knee pain. We have lightened this week but please consider seeing a doctor or physio before continuing.";adj.paceAdjust+=30;adj.mileageAdjust=-0.1;adj.swapRunForCross=true;adj.changes.push("Lightened this week due to reported joint or knee pain.");adj.type="warn";return adj;}
+  if(a.issues==="breathing"){adj.paceAdjust+=20;adj.changes.push("Pulled pace back slightly to help with breathing.");}
+  if(a.legs==="fresh"&&a.effort==="easy"){adj.type="increase";adj.mileageAdjust=0.1;adj.paceAdjust=-15;adj.changes.push("You felt strong so we bumped mileage up by 10% and nudged pace slightly faster.");}
   else if((a.legs==="fresh"||a.legs==="normal")&&a.effort==="right"){adj.type="none";}
-  else if(a.legs==="tired"&&a.effort==="right"){adj.type="soften";adj.paceAdjust+=30;adj.changes.push("Your legs were tired so we pulled target pace back by 30 seconds per mile. The effort should feel the same.");}
-  else if(a.legs==="tired"&&a.effort==="hard"){adj.type="soften";adj.paceAdjust+=30;adj.mileageAdjust=-0.1;adj.swapRunForCross=true;adj.changes.push("Your legs were tired and the effort felt hard so we dropped mileage by 10% and swapped one run for cross training.");adj.changes.push("Pulled target pace back by 30 seconds per mile.");}
-  else if(a.legs==="dead"){adj.type="recovery";adj.paceAdjust+=45;adj.mileageAdjust=-0.15;adj.swapRunForCross=true;adj.changes.push("Your legs were really struggling so this week is a recovery week. Mileage is down 15%.");adj.changes.push("One run swapped for cross training and pace pulled back significantly.");adj.changes.push("Trust the process. A lighter week now means stronger running later.");}
-  else if(a.legs==="fresh"&&a.effort==="hard"){adj.type="soften";adj.paceAdjust+=15;adj.changes.push("Even though your legs felt OK the effort was hard, so we pulled pace back slightly to keep things sustainable.");}
+  else if(a.legs==="tired"&&a.effort==="right"){adj.type="soften";adj.paceAdjust+=30;adj.changes.push("Your legs were tired so we pulled target pace back by 30 seconds per mile.");}
+  else if(a.legs==="tired"&&a.effort==="hard"){adj.type="soften";adj.paceAdjust+=30;adj.mileageAdjust=-0.1;adj.swapRunForCross=true;adj.changes.push("Dropped mileage by 10% and swapped one run for cross training.");adj.changes.push("Pulled target pace back by 30 seconds per mile.");}
+  else if(a.legs==="dead"){adj.type="recovery";adj.paceAdjust+=45;adj.mileageAdjust=-0.15;adj.swapRunForCross=true;adj.changes.push("Your legs were really struggling so this week is a recovery week. Mileage down 15%.");adj.changes.push("One run swapped for cross training and pace pulled back significantly.");adj.changes.push("Trust the process. A lighter week now means stronger running later.");}
+  else if(a.legs==="fresh"&&a.effort==="hard"){adj.type="soften";adj.paceAdjust+=15;adj.changes.push("Even though legs felt OK the effort was hard, so we pulled pace back slightly.");}
   return adj;
 }
 function parsePaceToSecs(pace){const parts=pace.split(":").map(Number);return parts[0]*60+(parts[1]||0);}
 function secsToMinMile(secs){const m=Math.floor(secs/60),s=Math.round(secs%60);return`${m}:${String(s).padStart(2,"0")}`;}
 function applyAdjustment(adj){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
-  const wk=plan.weeks[currentWeekIdx];
-  if(!wk)return;
+  const tk=todayKey();const currentWeekIdx=parseInt(tk.split("-")[0]);
+  const wk=plan.weeks[currentWeekIdx];if(!wk)return;
   if(!wk.originalDays)wk.originalDays=JSON.parse(JSON.stringify(wk.days));
   if(!wk.originalMiles)wk.originalMiles=wk.miles;
   if(!wk.originalPace)wk.originalPace=wk.pace;
-  wk.adjustmentApplied=adj;
-  if(adj.type==="none")return;
+  wk.adjustmentApplied=adj;if(adj.type==="none")return;
   if(adj.paceAdjust!==0){const cur=parsePaceToSecs(wk.pace||"12:00");wk.pace=secsToMinMile(Math.max(480,cur+adj.paceAdjust));}
   if(adj.mileageAdjust!==0){const mi=parseFloat(wk.miles);if(!isNaN(mi))wk.miles=(mi*(1+adj.mileageAdjust)).toFixed(1)+" mi";}
   if(adj.swapRunForCross){for(let di=0;di<wk.days.length;di++){const d=wk.days[di];if(d.slot==="run-easy"&&!state.done[currentWeekIdx+"-"+di]){wk.days[di]={...d,type:"cross",slot:"cross",label:"Cross-train (easy)",detail:"Swapped from a run this week to give your legs more recovery time.",treadmill:false};break;}}}
 }
 function showAdjustmentSummary(adj){
-  closeModal();
-  let html="";
+  closeModal();let html="";
   if(adj.type==="none"&&adj.changes.length===0){html=`<div style="font-size:24px;text-align:center;margin-bottom:12px;">✅</div><div class="modal-title">Plan Unchanged</div><div class="no-change-card"><div class="no-change-text">Your training is going well. No adjustments needed. Stick with the original plan this week and keep it up!</div></div><div class="modal-btns"><button class="mbtn-primary" onclick="confirmAdjustment()">Let's Go</button></div>`;}
   else if(adj.warn){html=`<div style="font-size:24px;text-align:center;margin-bottom:12px;">⚠️</div><div class="modal-title">Heads Up</div><div class="warn-card"><div class="warn-text">${adj.warnText}</div></div>${adj.changes.length?`<div class="adjustment-card"><div class="adjustment-label">What We Changed</div><div class="adjustment-text">${adj.changes.map(c=>"- "+c).join("<br>")}</div></div>`:""}<div class="modal-btns"><button class="mbtn-primary" onclick="confirmAdjustment()">Got It, Show My Plan</button><button class="mbtn-secondary" onclick="overrideAdjustment()">Keep Original Plan</button></div>`;}
   else{html=`<div style="font-size:24px;text-align:center;margin-bottom:12px;">📋</div><div class="modal-title">Here Is What We Adjusted</div><div class="adjustment-card"><div class="adjustment-label">Changes for This Week</div><div class="adjustment-text">${adj.changes.map(c=>"- "+c).join("<br>")}</div></div><div class="modal-body" style="margin-bottom:16px;">These are small tweaks to keep your training sustainable. You can always override if you feel differently.</div><div class="modal-btns"><button class="mbtn-primary" onclick="confirmAdjustment()">Looks Good</button><button class="mbtn-secondary" onclick="overrideAdjustment()">Keep Original Plan</button></div>`;}
@@ -1062,14 +1025,12 @@ function showAdjustmentSummary(adj){
   showModal("modal-adjustment");
 }
 function confirmAdjustment(){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
+  const tk=todayKey();const currentWeekIdx=parseInt(tk.split("-")[0]);
   shownCelebrations["checkin-week-"+(currentWeekIdx-1)]="done";
   save();closeModal();render();
 }
 function overrideAdjustment(){
-  const tk=todayKey();
-  const currentWeekIdx=parseInt(tk.split("-")[0]);
+  const tk=todayKey();const currentWeekIdx=parseInt(tk.split("-")[0]);
   const wk=plan.weeks[currentWeekIdx];
   if(wk.originalDays)wk.days=JSON.parse(JSON.stringify(wk.originalDays));
   if(wk.originalMiles)wk.miles=wk.originalMiles;
