@@ -1,0 +1,18 @@
+{
+  "name": "Run Your First 5K",
+  "short_name": "5K Trainer",
+  "description": "A personalized 8-week training plan to run your first 5K.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D0D0D",
+  "theme_color": "#F97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
