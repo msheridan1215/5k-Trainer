@@ -21,6 +21,13 @@
     });
   }
 </script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js");
+    });
+  }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -383,6 +390,7 @@ textarea:focus{border-color:var(--orange);}
             <button class="calc-tab active" onclick="setCalcTab('pace',this)">Find My<br>Pace</button>
             <button class="calc-tab" onclick="setCalcTab('time',this)">Finish<br>Time</button>
             <button class="calc-tab" onclick="setCalcTab('dist',this)">Find<br>Distance</button>
+            <button class="calc-tab" onclick="setCalcTab('speed',this)">Treadmill<br>Speed</button>
           </div>
           <div id="ctab-pace">
             <div class="input-group"><div class="input-label">Distance <span class="input-hint">miles</span></div><div class="input-row"><input class="calc-input" id="p-dist" type="number" min="0" step="0.1" placeholder="3.1" oninput="calcPace()"><span class="unit-lbl">mi</span></div></div>
@@ -398,6 +406,11 @@ textarea:focus{border-color:var(--orange);}
             <div class="input-group"><div class="input-label">Finish Time <span class="input-hint">mm:ss</span></div><div class="input-row"><input class="calc-input" id="d-time" type="text" placeholder="30:00" oninput="calcDist()"></div></div>
             <div class="input-group"><div class="input-label">Pace <span class="input-hint">mm:ss per mile</span></div><div class="input-row"><input class="calc-input" id="d-pace" type="text" placeholder="9:39" oninput="calcDist()"><span class="unit-lbl">/mi</span></div></div>
             <div class="result-box" id="d-result"><div class="result-label">Distance</div><div class="result-value" id="d-result-val">—</div><div class="result-sub" id="d-result-sub"></div></div>
+          </div>
+          <div id="ctab-speed" style="display:none">
+            <div class="input-group"><div class="input-label">Distance <span class="input-hint">miles</span></div><div class="input-row"><input class="calc-input" id="s-dist" type="number" min="0" step="0.1" placeholder="3.1" oninput="calcSpeed()"><span class="unit-lbl">mi</span></div></div>
+            <div class="input-group"><div class="input-label">Target Time <span class="input-hint">mm:ss</span></div><div class="input-row"><input class="calc-input" id="s-time" type="text" placeholder="30:00" oninput="calcSpeed()"></div></div>
+            <div class="result-box" id="s-result"><div class="result-label">Treadmill Speed</div><div class="result-value" id="s-result-val">—</div><div class="result-sub" id="s-result-sub"></div></div>
           </div>
           <button class="clear-btn" onclick="clearCalc()">Clear Fields</button>
         </div>
@@ -1178,14 +1191,15 @@ function render(){
 }
 
 // ── CALC TOOLS ──
-function setCalcTab(t,btn){["pace","time","dist"].forEach(id=>{document.getElementById("ctab-"+id).style.display=id===t?"block":"none";});document.querySelectorAll(".calc-tab").forEach(b=>b.classList.remove("active"));btn.classList.add("active");}
+function setCalcTab(t,btn){["pace","time","dist","speed"].forEach(id=>{document.getElementById("ctab-"+id).style.display=id===t?"block":"none";});document.querySelectorAll(".calc-tab").forEach(b=>b.classList.remove("active"));btn.classList.add("active");}
 function parseTime(str){if(!str||!str.trim())return null;const parts=str.trim().split(":").map(Number);if(parts.some(isNaN)||parts.some(p=>p<0))return null;if(parts.length===2){const[m,s]=parts;if(s>=60)return null;return m*60+s;}if(parts.length===3){const[h,m,s]=parts;if(m>=60||s>=60)return null;return h*3600+m*60+s;}return null;}
 function fmtTime(secs){secs=Math.round(secs);const h=Math.floor(secs/3600),m=Math.floor((secs%3600)/60),s=secs%60;if(h>0)return`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;return`${m}:${String(s).padStart(2,"0")}`;}
 function calcTread(){const mph=parseFloat(document.getElementById("tread-mph").value);if(!mph||mph<=0){document.getElementById("tread-pace").textContent="—";document.getElementById("tread-kph").textContent="—";return;}document.getElementById("tread-pace").textContent=fmtTime(3600/mph);document.getElementById("tread-kph").textContent=(mph*1.60934).toFixed(1);}
 function calcPace(){const dist=parseFloat(document.getElementById("p-dist").value);const t=parseTime(document.getElementById("p-time").value);const res=document.getElementById("p-result");if(!dist||!t){res.classList.remove("show");return;}const spm=t/dist;document.getElementById("p-result-val").textContent=fmtTime(spm)+" / mile";document.getElementById("p-result-sub").textContent=dist!==3.1?`5K at this pace: ${fmtTime(spm*3.1)} - about ${(3600/spm).toFixed(1)} mph`:`About ${(3600/spm).toFixed(1)} mph on treadmill`;res.classList.add("show");}
 function calcTime(){const dist=parseFloat(document.getElementById("t-dist").value);const p=parseTime(document.getElementById("t-pace").value);const res=document.getElementById("t-result");if(!dist||!p){res.classList.remove("show");return;}document.getElementById("t-result-val").textContent=fmtTime(dist*p);document.getElementById("t-result-sub").textContent=`Pace: ${fmtTime(p)}/mi - about ${(3600/p).toFixed(1)} mph`;res.classList.add("show");}
 function calcDist(){const t=parseTime(document.getElementById("d-time").value);const p=parseTime(document.getElementById("d-pace").value);const res=document.getElementById("d-result");if(!t||!p){res.classList.remove("show");return;}const dist=(t/p).toFixed(2);document.getElementById("d-result-val").textContent=dist+" miles";document.getElementById("d-result-sub").textContent=`${(dist*1.60934).toFixed(2)} km - ${dist>=3.1?"Covers a full 5K!":"A 5K is 3.1 miles"}`;res.classList.add("show");}
-function clearCalc(){["p-dist","p-time","t-dist","t-pace","d-time","d-pace"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});["p-result","t-result","d-result"].forEach(id=>document.getElementById(id).classList.remove("show"));}
+function calcSpeed(){const dist=parseFloat(document.getElementById("s-dist").value);const t=parseTime(document.getElementById("s-time").value);const res=document.getElementById("s-result");if(!dist||!t){res.classList.remove("show");return;}const mph=(dist/(t/3600));const kph=mph*1.60934;const paceSecs=t/dist;document.getElementById("s-result-val").textContent=mph.toFixed(1)+" mph";document.getElementById("s-result-sub").textContent=`${kph.toFixed(1)} km/h · pace ${fmtTime(paceSecs)}/mi`;res.classList.add("show");}
+function clearCalc(){["p-dist","p-time","t-dist","t-pace","d-time","d-pace","s-dist","s-time"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});["p-result","t-result","d-result","s-result"].forEach(id=>document.getElementById(id).classList.remove("show"));}
 </script>
 </body>
 </html>
