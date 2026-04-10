@@ -1,5 +1,5 @@
-const CACHE = "5k-v1";
-const SHELL = ["/", "/index.html", "/icons/icon.svg", "/icons/icon-192.png", "/icons/icon-512.png", "/manifest.json"];
+const CACHE = "5k-v2";
+const SHELL = ["/", "/index.html", "/icons/icon.svg", "/manifest.json"];
 
 self.addEventListener("install", e => {
   e.waitUntil(
