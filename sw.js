@@ -1,4 +1,4 @@
-const CACHE = "5k-v2";
+const CACHE = "5k-v3";
 const SHELL = ["/", "/index.html", "/icons/icon.svg", "/manifest.json"];
 
 self.addEventListener("install", e => {
